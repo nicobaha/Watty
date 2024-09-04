@@ -9,4 +9,8 @@ export class Tab1Page {
 
   constructor() {}
 
+  ngOnInit(): void{
+  }
+
+  Texts:String = 'Bienvenido a Watty';
 }
