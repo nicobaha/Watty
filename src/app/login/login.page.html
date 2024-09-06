@@ -1,22 +1,38 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>Iniciar sesión</ion-title>
-  </ion-toolbar>
-</ion-header>
-
 <ion-content>
-  <ion-card>
-    <ion-card-content>
-      <ion-item>
-        <ion-input label="Nombre de Usuario:" placeholder=""></ion-input>
-      </ion-item>
-      <ion-item>
-        <ion-input label="Contraseña:" type="password" value=""></ion-input>
-      </ion-item>
-    </ion-card-content>
-    <ion-card-content>
-      <ion-button shape="round" (click)="login()">Iniciar sesión</ion-button>
-      <ion-button shape="round" (click)="signup()">Registrate</ion-button>
-    </ion-card-content>
-  </ion-card>
+  <div class="log-container">
+    <div class="header">
+      <div class="title">
+        <ion-img class="logoW" src="../../assets/icon/IconWatty500x500.png"></ion-img>
+        <ion-title class="Tit1">Watty</ion-title>
+      </div>
+    </div>
+
+    <div class="main">
+      <ion-list lines="none" class="form">
+
+        <ion-item>
+          <ion-label>Correo</ion-label>
+          <ion-input class="ion-text-right"></ion-input>
+          <ion-icon name="at-outline"></ion-icon>
+        </ion-item>
+
+        <ion-item>
+          <ion-label>Contraseña</ion-label>
+          <ion-input class="ion-text-right" type="password" value=""></ion-input>
+          <ion-icon name="eye-outline"></ion-icon>
+        </ion-item>
+
+        <ion-item>
+          <ion-checkbox justify="start">Recuerdame</ion-checkbox>
+        </ion-item>
+
+        <ion-item>
+          <ion-button shape="round" (click)="login()">Iniciar sesión</ion-button>
+          <ion-button shape="round" (click)="signup()">Registrate</ion-button>
+        </ion-item>
+
+      </ion-list>
+    </div>
+  </div>
 </ion-content>
+
