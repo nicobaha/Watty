@@ -1,22 +1,22 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title>login</ion-title>
+    <ion-title>Iniciar sesión</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">login</ion-title>
-    </ion-toolbar>
-  </ion-header>
-
-</ion-content>
-
 <ion-content>
   <ion-card>
-    <ion-card-header>
-      <ion-button expand="full" (click)="login()">Iniciar sesión</ion-button>
-    </ion-card-header>
+    <ion-card-content>
+      <ion-item>
+        <ion-input label="Nombre de Usuario:" placeholder=""></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-input label="Contraseña:" type="password" value=""></ion-input>
+      </ion-item>
+    </ion-card-content>
+    <ion-card-content>
+      <ion-button shape="round" (click)="login()">Iniciar sesión</ion-button>
+      <ion-button shape="round" (click)="signup()">Registrate</ion-button>
+    </ion-card-content>
   </ion-card>
 </ion-content>
