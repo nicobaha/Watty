@@ -1,35 +1,41 @@
 <ion-content>
   <div class="log-container">
-    <div class="header">
-      <div class="title">
+    <div class="cont-titulo">
+      <div class="logo ion-text-center">
         <ion-img class="logoW" src="../../assets/icon/IconWatty500x500.png"></ion-img>
+      </div>
+      <div class="ion-text-center">
         <ion-title class="Tit1">Watty</ion-title>
       </div>
     </div>
 
-    <div class="main">
+    <div class="cont-login">
       <ion-list lines="none" class="form">
 
         <ion-item>
           <ion-label>Correo</ion-label>
           <ion-input class="ion-text-right"></ion-input>
-          <ion-icon name="at-outline"></ion-icon>
+          <ion-icon slot="end" name="at-outline"></ion-icon>
         </ion-item>
 
         <ion-item>
           <ion-label>Contraseña</ion-label>
           <ion-input class="ion-text-right" type="password" value=""></ion-input>
-          <ion-icon name="eye-outline"></ion-icon>
+          <ion-icon slot="end" name="eye-outline"></ion-icon>
         </ion-item>
 
-        <ion-item>
-          <ion-checkbox justify="start">Recuerdame</ion-checkbox>
-        </ion-item>
+        <div class="A1">
+          <ion-checkbox >Recuerdame</ion-checkbox>
+          <a class="save"><strong>Recuperar Contraseña</strong></a>
+        </div>
 
-        <ion-item>
-          <ion-button shape="round" (click)="login()">Iniciar sesión</ion-button>
-          <ion-button shape="round" (click)="signup()">Registrate</ion-button>
-        </ion-item>
+        <div class="ion-text-center">
+          <ion-button class="botonA2" shape="" (click)="login()">Iniciar sesión</ion-button>
+        </div>
+
+        <div class="ion-text-center">
+          <p>¿No tienes una cuenta en Watty?<a class="singup" (click)="signup()"><br><strong>Crea una cuenta</strong></a></p>
+        </div>
 
       </ion-list>
     </div>
