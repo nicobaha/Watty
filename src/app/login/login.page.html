@@ -1,6 +1,6 @@
 <ion-content>
   <ion-grid class="log-container">
-    <!-- Logo and Title Section -->
+    <!-- Primera mitad, va logo y nombre -->
     <ion-row class="cont-titulo ion-justify-content-center">
       <ion-col size="12" class="ion-text-center">
         <div class="logo">
@@ -10,25 +10,25 @@
       </ion-col>
     </ion-row>
 
-    <!-- Login Form Section -->
+    <!-- Segunda mitad, va todo el login -->
     <ion-row class="cont-login ion-justify-content-center">
       <ion-col size="12">
         <ion-list lines="none" class="form">
-          <!-- Email Input -->
-          <ion-item>
+          <!-- Correo -->
+          <ion-item class="custom-input">
             <ion-label>Correo</ion-label>
             <ion-input class="ion-text-right" type="email"></ion-input>
             <ion-icon slot="end" name="at-outline"></ion-icon>
           </ion-item>
 
-          <!-- Password Input -->
-          <ion-item>
+          <!-- Contraseña -->
+          <ion-item class="custom-input">
             <ion-label>Contraseña</ion-label>
             <ion-input class="ion-text-right" type="password"></ion-input>
             <ion-icon slot="end" name="eye-outline"></ion-icon>
           </ion-item>
 
-          <!-- Remember Me and Forgot Password Section -->
+          <!-- Cositas opcionales -->
           <ion-row class="A1 ion-align-items-center">
             <ion-col size="4">
               <ion-checkbox>Recuerdame</ion-checkbox>
@@ -39,17 +39,17 @@
           </ion-row>
           
 
-          <!-- Login Button -->
+          <!-- boton de login -->
           <ion-row class="ion-justify-content-center">
             <ion-col size="12" class="ion-text-center">
               <ion-button class="botonA2" shape="" expand="block" (click)="login()">Iniciar sesión</ion-button>
             </ion-col>
           </ion-row>
 
-          <!-- Signup Section -->
+          <!-- Crea tu cuenta -->
           <ion-row class="ion-justify-content-center">
             <ion-col size="12" class="ion-text-center">
-              <p>¿No tienes una cuenta en Watty?<a class="singup" (click)="signup()"><br><strong>Crea una cuenta</strong></a></p>
+              <p class="Text1">¿No tienes una cuenta en Watty?<a class="singup" (click)="signup()"><br><strong>Crea una cuenta</strong></a></p>
             </ion-col>
           </ion-row>
 
