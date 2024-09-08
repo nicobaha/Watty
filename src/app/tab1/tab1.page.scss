@@ -4,3 +4,38 @@
     display:block;
     margin: 0 auto;
 }
+ion-card {
+    padding-top:10px;
+    --background: #000;
+    --color: #9efff0;
+    border-radius: 7px;
+  }
+
+
+  //no me cambia el valor del icon  no se por que uwu
+ .ion-icon {
+    font-size:50px;
+ }
+  
+  ion-card-title {
+    --color: #52ffe4;
+    font-size: 12px;
+  }
+  
+  ion-card-subtitle {
+    --color: #d1fff8;
+    font-size: 12px;
+
+  }
+  ion-col {
+    
+    border: solid 1px #fff;
+    color: #fff;
+    text-align: center;
+    size:"10";
+    display:flex;
+ 
+  }
+  .ion-grid {
+    --ion-grid-columns: 10;
+  }

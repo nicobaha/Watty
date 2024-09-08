@@ -8,10 +8,49 @@
   <!-- Imagen del logo de Watty con clase personalizada -->
   <ion-img src="assets/images/wattybienvenida.png" alt="Watty Logo" ></ion-img>
 
+  <!--estadisticas de consumo-->
+  <ion-grid>
+    <ion-row>
+      <ion-col>  <ion-card>
+        <ion-icon name="flash-outline" size="large"></ion-icon>
+        <ion-card-header>
+          <ion-card-title>Consumo hoy</ion-card-title>  </ion-card-header>
+        <ion-card-content>
+          23,4W
+        </ion-card-content>
+      </ion-card></ion-col>
+
+      <ion-col>  <ion-card>
+        <ion-icon name="alert-circle-outline" size="large"></ion-icon>
+        <ion-card-header>
+          <ion-card-title>Calefactor cocina</ion-card-title>
+         
+        </ion-card-header>
+      
+        <ion-card-content>
+          532,1W
+        </ion-card-content>
+      </ion-card></ion-col>
+
+      <ion-col>  <ion-card>
+        <ion-icon name="calendar-number-outline" size="large"></ion-icon>
+        <ion-card-header>
+          <ion-card-title>Consumo mes</ion-card-title>
+         
+        </ion-card-header>
+      
+        <ion-card-content>
+          3.472,4W
+        </ion-card-content>
+      </ion-card></ion-col>
+    </ion-row>
+  </ion-grid>
 
 
-  <ion-text> <h4> ¿Sabias cuanto consumen ?👀</h4></ion-text>
-<!-- acordeon usos-->
+
+
+  <!-- acordeon ¿sabias quee?-->
+<ion-text> <h4> ¿Sabias cuanto consumen ?👀</h4></ion-text>
 <ion-accordion-group>
   <ion-accordion value="first">
     <ion-item slot="header" color="light">
@@ -107,17 +146,3 @@
     <ion-button expand="block" color="primary">Ir a calculadora</ion-button>
   </div>
 </ion-content>
-
-<!-- Estilos personalizados -->
-<style>
-  .watty-logo {
-    width: 150px;  /* Ajusta el ancho de la imagen del logo */
-    height: 150px; /* Ajusta la altura de la imagen del logo */
-    display: block;
-    margin: 20px auto; /* Centra la imagen horizontalmente */
-  }
-
-  ion-item::after {
-    display: none; /* Oculta las flechas del acordeón */
-  }
-</style>
