@@ -8,12 +8,15 @@ import { Router } from '@angular/router';
 })
 export class LoginPage implements OnInit {
 
+  username: string='';
+
   constructor(private router: Router) { }
 
   ngOnInit() {
   }
 
   login() {
+    localStorage.setItem('username', this.username);
     this.router.navigate(['./tabs']);
   }
 

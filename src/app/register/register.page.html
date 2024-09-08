@@ -4,23 +4,51 @@
   </ion-buttons>
 </ion-toolbar>
 
-<ion-content>
-  <ion-card>
-    <ion-card-content>
-      <ion-item>
-        <ion-input label="Nombre de Usuario:" placeholder=""></ion-input>
-      </ion-item>
-      <ion-item>
-        <ion-input label="Correo:" type="email" placeholder="watty@gmail.com"></ion-input>
-      </ion-item>
-      <ion-item>
-        <ion-input label="Contraseña:" type="password" value=""></ion-input>
-      </ion-item>
-      <ion-item>
-        <ion-input label="Celular" type="tel" placeholder="888-888-8888"></ion-input>
-      </ion-item>
-      <ion-checkbox>I agree to the <a href="#" (click)="$event.stopPropagation()">terms and conditions</a></ion-checkbox>
-      <ion-button shape="round">Crear Cuenta</ion-button>
-    </ion-card-content>
-  </ion-card>
+<ion-content scroll-y="false">
+  <ion-grid class="singup-container">
+
+    <ion-row class="cont-titulo ion-justify-content-center">
+      <ion-col size="12" class="ion-text-start">
+        <ion-title>¡Crea tu cuenta!</ion-title>
+      </ion-col>
+    </ion-row>
+
+    <ion-row class="cont-singup ion-justify-content-center">
+      <ion-col size="12" class="ion-text-start">
+        <ion-list lines="none" class="form">
+          
+          <ion-item>
+            <ion-input label="Nombre:" placeholder=""></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-input label="Correo:" type="email" placeholder=""></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-input label="Celular:" type="tel" placeholder=""></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-input label="Contraseña:" type="password" value=""></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-input label="Confirma contraseña:" type="password" value=""></ion-input>
+          </ion-item>
+
+          <ion-row class="A1 ion-align-items-center">
+            <ion-col size="12">
+              <p>He leído y acepto los <ion-checkbox><a href="#" (click)="$event.stopPropagation()">términos y condiciones</a></ion-checkbox></p>
+            </ion-col>
+          </ion-row>
+
+          <ion-row class="ion-justify-content-center">
+            <ion-col size="12" class="ion-text-center">
+              <ion-button class="botonA2" shape="" expand="block">Crear Cuenta</ion-button>
+            </ion-col>
+          </ion-row>
+
+        </ion-list>
+      </ion-col>
+    </ion-row>
+
+  </ion-grid>
 </ion-content>
+

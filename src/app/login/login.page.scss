@@ -36,6 +36,12 @@
     max-width: 320px;
     margin: 0 auto;
     background: none;
+
+    ion-item{
+        --background: transparent;
+        border-color: white;
+        border-style: solid;
+    }
     ion-item{
         margin-bottom: 15px;
         border-radius: 5px;
@@ -64,6 +70,9 @@
         text-transform: none;         
         min-width: 300px;
         padding-bottom: 40px;
+        font-weight: normal;
+        font-size: 16px;
+        height: 90px;
     }
 
     .singup{
@@ -91,6 +100,9 @@
     .form{
         max-width: 280px;
         .A1{
+            display: flex;
+            padding-bottom: 8px;
+            font-size: 8px;
             ion-checkbox {
                 transform: scale(0.9); /* Ajusta el tamaño del checkbox */
                 font-size: 10px;
@@ -103,8 +115,9 @@
     
         .botonA2{       
             min-width: 260px;
+            height: 60px;
             padding-bottom: 30px;
-            font-size: 12px;
+            font-size: 14px;
         }
     
         .Text1{
