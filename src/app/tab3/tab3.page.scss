@@ -1,0 +1,51 @@
+.toolbar{
+    --background: #5AC375;
+    color:ghostwhite
+}
+.profile-card {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    text-align: left;
+  }
+  
+  ion-avatar img {
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+  }
+  
+  ion-card-title {
+    margin-left: 15px;
+    font-size: 1.2em;
+    font-weight: bold;
+  }
+  
+  ion-list-header {
+    margin-top: 20px;
+    font-size: 1.1em;
+    font-weight: bold;
+  }
+  
+  ion-item ion-note {
+    font-size: 0.9em;
+    color: var(--ion-color-medium);
+  }
+
+  .ion-text-center{
+    padding: 5px;
+  }
+
+  .container{
+    padding: 10px;
+    text-align: center;
+  }
+
+ion-button{
+    --background: #5AC375;
+}
+
+ion-toggle{
+    --track-background-checked: rgba(90, 195, 116, 0.433);
+    --handle-background-checked: #5AC375;
+}
