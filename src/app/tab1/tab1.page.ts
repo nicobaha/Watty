@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { AlertController } from '@ionic/angular';
 
 @Component({
   selector: 'app-tab1',
@@ -7,10 +8,20 @@ import { Component } from '@angular/core';
 })
 export class Tab1Page {
 
-  constructor() {}
-
   ngOnInit(): void{
   }
 
   Texts:String = 'Bienvenido a Watty';
+
+  constructor(private alertController: AlertController) {}
+
+  async showAlert() {
+    const alert = await this.alertController.create({
+      header: '¡Atención!',
+      message: '¡Hey! Este electrodoméstico debería ser desconectado.',
+      buttons: ['OK'],
+    });
+
+    await alert.present();
+  }
 }

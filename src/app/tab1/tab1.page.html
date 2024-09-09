@@ -1,5 +1,5 @@
 <ion-header [translucent]="true">
-  <ion-toolbar>
+  <ion-toolbar class="toolbar">
     <ion-title>Watty</ion-title>
   </ion-toolbar>
 </ion-header>
@@ -20,7 +20,7 @@
         </ion-card-content>
       </ion-card></ion-col>
 
-      <ion-col>  <ion-card>
+      <ion-col>  <ion-card (click)="showAlert()">
         <ion-icon name="alert-circle-outline" size="large"></ion-icon>
         <ion-card-header>
           <ion-card-title>Calefactor cocina</ion-card-title>
@@ -141,8 +141,4 @@
   </ion-accordion>
 </ion-accordion-group>
   
-  <!-- Botón dcalculadora-->
-  <div class="ion-padding">
-    <ion-button expand="block" color="primary">Ir a calculadora</ion-button>
-  </div>
 </ion-content>
