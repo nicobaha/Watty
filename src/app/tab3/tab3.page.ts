@@ -10,6 +10,8 @@ export class Tab3Page implements OnInit {
 
   constructor(private router:Router) { }
 
+  NomUser: string = ('Claudia Alves');
+
   ngOnInit() {
   }
 
