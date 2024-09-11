@@ -36,13 +36,17 @@
     max-width: 320px;
     margin: 0 auto;
     background: none;
+    color: white;
+
+    ion-icon{
+        color: white;
+    }
 
     ion-item{
         --background: transparent;
         border-color: white;
+        color: white;
         border-style: solid;
-    }
-    ion-item{
         margin-bottom: 15px;
         border-radius: 5px;
     }
@@ -58,7 +62,7 @@
         }
         .save{
             font-size: 11px;
-            color: black; 
+            color: white; 
         }  
     }
 
@@ -76,7 +80,7 @@
     }
 
     .singup{
-        color: black;
+        color: white;
     }
 }
 
