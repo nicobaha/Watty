@@ -23,13 +23,16 @@ body, ion-content {
     background-color: white;
     -webkit-box-shadow: 0 8px 14px rgba(0, 0, 0, 0.1) !important;
     box-shadow: 0 8px 14px rgba(0, 0, 0, 0.1) !important;
-  }
+}
 
 ion-title.md.title-default.hydrated {
     text-align: center;
     font-weight: bold
 }
-
+.alert-wrapper.sc-ion-alert-md, .alert-button-inner{
+    border-radius: 25px;
+    color: #5AC375;
+}
 
 /* Core CSS required for Ionic components to work properly */
 @import "@ionic/angular/css/core.css";
