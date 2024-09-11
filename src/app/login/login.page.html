@@ -17,14 +17,15 @@
           <!-- Correo -->
           <ion-item class="custom-input">
             <ion-label>Correo</ion-label>
-            <ion-input class="ion-text-right" type="email" [(ngModel)]="username"></ion-input>
+            <!--[(ngModel)] capturar el valor de la entrada y enlaza el valor del input con la variable en TypeScript.-->
+            <ion-input class="ion-text-right" type="email" [(ngModel)]="mailuser"></ion-input>
             <ion-icon slot="end" name="at-outline"></ion-icon>
           </ion-item>
 
           <!-- Contraseña -->
           <ion-item class="custom-input">
             <ion-label>Contraseña</ion-label>
-            <ion-input class="ion-text-right" type="password"></ion-input>
+            <ion-input class="ion-text-right" type="password" [(ngModel)]="password"></ion-input>
             <ion-icon slot="end" name="eye-outline"></ion-icon>
           </ion-item>
 
@@ -43,6 +44,7 @@
           <ion-row class="ion-justify-content-center">
             <ion-col size="12" class="ion-text-center">
               <ion-button class="botonA2" shape="" expand="block" (click)="login()"><strong>Iniciar sesión</strong></ion-button>
+              
             </ion-col>
           </ion-row>
 
@@ -57,6 +59,16 @@
       </ion-col>
     </ion-row>
   </ion-grid>
+
+  <!-- Dónde estará el Alert que valide los datos -->
+  <ion-alert
+    [isOpen]="isAlertOpen"
+    header="Error"
+    [message]="alertMessage"
+    [buttons]="['OK']"
+    (didDismiss)="setAlertOpen(false)"
+  ></ion-alert>
+
 </ion-content>
 
 

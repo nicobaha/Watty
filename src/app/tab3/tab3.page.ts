@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router  } from '@angular/router';
 
 @Component({
   selector: 'app-tab3',
@@ -11,9 +11,9 @@ export class Tab3Page implements OnInit {
   constructor(private router:Router) { }
 
   NomUser: string = ('Claudia Alves');
+  mailuser: string = '';
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
   logOut(){
     this.router.navigate(['./login']);
