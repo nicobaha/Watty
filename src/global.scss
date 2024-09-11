@@ -13,6 +13,23 @@ body, ion-content {
     font-family: 'Poppins', sans-serif;
 }
   
+.searchbar-input.sc-ion-searchbar-md {
+    border-radius: 25px;
+    background-position: left 8px center;
+    height: auto;
+    font-size: 1.1rem;
+    font-weight: 400;
+    color: #7f8490;
+    background-color: white;
+    -webkit-box-shadow: 0 8px 14px rgba(0, 0, 0, 0.1) !important;
+    box-shadow: 0 8px 14px rgba(0, 0, 0, 0.1) !important;
+  }
+
+ion-title.md.title-default.hydrated {
+    text-align: center;
+    font-weight: bold
+}
+
 
 /* Core CSS required for Ionic components to work properly */
 @import "@ionic/angular/css/core.css";
