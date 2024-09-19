@@ -13,10 +13,16 @@ export class LoginPage implements OnInit {
   rememberMe: boolean = false;
   isAlertOpen: boolean = false;
   alertMessage: string = '';
+  showPassword = false; 
 
   constructor(private router: Router) { }
 
   ngOnInit() {
+  }
+
+  //Método para mostrar la contraseña
+  togglePassword() {
+    this.showPassword = !this.showPassword; // Alternar entre mostrar/ocultar
   }
 
   login() {
