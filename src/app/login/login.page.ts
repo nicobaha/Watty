@@ -72,6 +72,10 @@ export class LoginPage implements OnInit {
     this.router.navigate(['./register']);
   }
 
+  recover(){
+    this.router.navigate(['./recover-pw']);
+  }
+
   //Método que permite abrir o cerrar una alerta.
   setAlertOpen(isOpen: boolean, message?: string) {
     this.isAlertOpen = isOpen;         

@@ -18,6 +18,10 @@ const routes: Routes = [
   {
     path: 'register',
     loadChildren: () => import('./register/register.module').then( m => m.RegisterPageModule)
+  },
+  {
+    path: 'recover-pw',
+    loadChildren: () => import('./recover-pw/recover-pw.module').then( m => m.RecoverPWPageModule)
   }
 ];
 
