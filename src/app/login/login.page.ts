@@ -64,7 +64,8 @@ export class LoginPage implements OnInit {
     // Si todo es correcto, redirigir a la página de tabs
     // También haré interpolación con el correo del usuario, desde login-tabs-tabs3
     else
-    this.router.navigate(['./tabs']);
+    console.log(this.mailuser); 
+    this.router.navigate(['./tabs'], { queryParams: { mailuser: this.mailuser } });
   }
 
   //*Método que permite ir al "Registro"
