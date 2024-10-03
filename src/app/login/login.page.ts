@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { LocalStorageService } from '../services/local-storage.service';
 
 @Component({
   selector: 'app-login',
@@ -15,7 +16,7 @@ export class LoginPage implements OnInit {
   alertMessage: string = '';
   showPassword = false; 
 
-  constructor(private router: Router) { }
+  constructor(private router: Router,  private localstorage : LocalStorageService) { }
 
   ngOnInit() {
   }
@@ -64,8 +65,8 @@ export class LoginPage implements OnInit {
     // Si todo es correcto, redirigir a la página de tabs
     // También haré interpolación con el correo del usuario, desde login-tabs-tabs3
     else
-    console.log(this.mailuser); 
-    this.router.navigate(['./tabs'], { queryParams: { mailuser: this.mailuser } });
+      this.router.navigate(['./tabs/tab1']), this.localstorage.GuardarDato('mailuser', this.mailuser);
+      console.log('Mailuser en login:', this.mailuser);
   }
 
   //*Método que permite ir al "Registro"

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router  } from '@angular/router';
-import { ActivatedRoute } from '@angular/router';
+import { LocalStorageService } from '../services/local-storage.service';
 
 @Component({
   selector: 'app-tab3',
@@ -9,19 +9,19 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class Tab3Page implements OnInit {
 
-  constructor(private router:Router, private route: ActivatedRoute) { }
+  constructor(private router:Router, private localstorage : LocalStorageService) { }
 
-  NomUser: string = ('Claudia Alves');
   mailuser: string='';
-
+  NomUser: string = ('Claudia Alves');
+  
   ngOnInit() {
-    this.route.queryParams.subscribe(params => {
-      this.mailuser = params['mailuser'];
-      console.log('mailuser:', this.mailuser);
-    });
+    this.mailuser = this.localstorage.ObtenerDato('mailuser') || 'No obtubo el correo'
+    console.log('datos obtenidos', this.mailuser);
   }
 
   logOut(){
+    this.localstorage.LimpiarDato();
+    console.log('datos limpiados');
     this.router.navigate(['./login']);
   }
 

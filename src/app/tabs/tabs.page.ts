@@ -13,10 +13,6 @@ export class TabsPage {
   constructor(private route: ActivatedRoute) {}
 
   ngOnInit() {
-    this.route.queryParams.subscribe(params => {
-      this.mailuser = params['mailuser'];
-      console.log('mailuser en tabs:', this.mailuser);
-    });
   }
 
 }
