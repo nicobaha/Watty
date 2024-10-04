@@ -22,6 +22,10 @@ const routes: Routes = [
   {
     path: 'recover-pw',
     loadChildren: () => import('./recover-pw/recover-pw.module').then( m => m.RecoverPWPageModule)
+  },
+  {
+    path: '**',
+    loadChildren: () => import('./e404/e404.module').then( m => m.E404PageModule)
   }
 ];
 
