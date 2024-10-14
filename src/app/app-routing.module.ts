@@ -26,7 +26,7 @@ const routes: Routes = [
   {
     path: '**',
     loadChildren: () => import('./e404/e404.module').then( m => m.E404PageModule)
-  }
+  },
 ];
 
 @NgModule({
