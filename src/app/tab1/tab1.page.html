@@ -1,15 +1,15 @@
 <ion-header [translucent]="true" class="ion-no-border">
   <ion-toolbar class="toolbar">
     <ion-buttons slot="start">
-      <ion-button>
+      <ion-button (click)="tutorial()">
         <ion-icon class="custom-icon" name="information-circle-outline"></ion-icon>
       </ion-button>
     </ion-buttons>
     <ion-row class="cont-titulo ion-justify-content-center">
-      <ion-title>Watty</ion-title>
+      <ion-title (click)="inicioApp()">Watty</ion-title>
     </ion-row>
     <ion-buttons slot="end">
-      <ion-button>
+      <ion-button (click)="volver()">
         <ion-icon class="custom-icon" name="medical-outline"></ion-icon>
       </ion-button>
     </ion-buttons>

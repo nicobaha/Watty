@@ -24,6 +24,14 @@ const routes: Routes = [
     loadChildren: () => import('./recover-pw/recover-pw.module').then( m => m.RecoverPWPageModule)
   },
   {
+    path: 'tabs-old',
+    loadChildren: () => import('./tabs-old/tabs-old.module').then( m => m.TabsOldPageModule)
+  },
+  {
+    path: 'tutorial',
+    loadChildren: () => import('./tutorial/tutorial.module').then( m => m.TutorialPageModule)
+  },
+  {
     path: '**',
     loadChildren: () => import('./e404/e404.module').then( m => m.E404PageModule)
   },
