@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-tabs',
@@ -7,8 +8,11 @@ import { Component } from '@angular/core';
 })
 export class TabsPage {
 
-  constructor() {}
+  mailuser: string="";
 
-  
+  constructor(private route: ActivatedRoute) {}
+
+  ngOnInit() {
+  }
 
 }
