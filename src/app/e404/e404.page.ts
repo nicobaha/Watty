@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { Location } from '@angular/common'; // Verá el historial de navegación.
 
 @Component({
   selector: 'app-e404',
@@ -7,9 +9,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class E404Page implements OnInit {
 
-  constructor() { }
+  constructor(private router : Router, private loc : Location) { }
 
   ngOnInit() {
+  }
+
+  volver(){
+    this.loc.back();
   }
 
 }
