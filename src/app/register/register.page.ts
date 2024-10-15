@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AlertController } from '@ionic/angular'; // Importa AlertController
+import { LocalStorageService } from '../services/local-storage.service';
 
 @Component({
   selector: 'app-register',
@@ -18,7 +19,7 @@ export class RegisterPage implements OnInit {
   showPassword = false;
   AceptaCondiciones: boolean = false;
 
-  constructor(private router: Router, private alertController: AlertController) { }
+  constructor(private router: Router, private alertController: AlertController, private localS : LocalStorageService) { }
 
   ngOnInit() {}
 
@@ -92,8 +93,22 @@ export class RegisterPage implements OnInit {
       return;
     }
 
+    //Constante que tendrá todos las variables que quiero guardar.
+    const datosUsuario = {
+      nombre: this.nombre,
+      rut: this.rut,
+      mailuser: this.mailuser,
+      celular: this.celular,
+      password: this.password,
+    };
+
     // Si todo está correcto, navega a la página de login
+    this.localS.GuardarDato('Usuario', datosUsuario);
+    // Obtener el usuario registrado (Prueba)
+    console.log("usuario registrado...")
+    this.presentAlert('¡Usuario Registrado con Exito!');
     this.router.navigate(['./login']);
+    // Limpiará los campos.
     this.nombre = '';
     this.rut = '';
     this.mailuser = '';
