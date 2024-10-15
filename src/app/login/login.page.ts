@@ -13,8 +13,6 @@ export class LoginPage implements OnInit {
   mailuser: string = '';
   password: string = '';
   rememberMe: boolean = false;
-  isAlertOpen: boolean = false;
-  alertMessage: string = '';
   showPassword = false; 
 
   constructor(private router: Router, private alertController: AlertController,  private localS : LocalStorageService) { }
@@ -23,9 +21,9 @@ export class LoginPage implements OnInit {
   }
 
   // Método que permite mostrar una alerta.
-  async presentAlert(message: string) {
+  async presentAlert(header: string, message: string) {
     const alert = await this.alertController.create({
-      header: 'Error',
+      header: header,
       message: message,
       buttons: ['OK']
     });
@@ -44,32 +42,32 @@ export class LoginPage implements OnInit {
 
     // Validar si faltan tanto el correo como la contraseña
     if (!this.mailuser && !this.password) {
-      this.presentAlert("Ingrese su correo y contraseña.");
+      this.presentAlert("Error","Ingrese su correo y contraseña.");
       return;
     }
 
     // Validar si falta el correo
     if (!this.mailuser) {
-      this.presentAlert("Ingrese un correo.");
+      this.presentAlert("Error", "Ingrese un correo.");
       return;
     }
 
     // Validar si falta la contraseña
     if (!this.password) {
-      this.presentAlert("Ingrese su contraseña.");
+      this.presentAlert("Error", "Ingrese su contraseña.");
       return;
     }
 
     // Validar el formato del correo, i Servirá para no discriminar entre mayúsculas y minúsculas
     const emailRegex = /^[^\s@]+@[^\s@]+\.(com|cl)$/i;
     if (!emailRegex.test(this.mailuser)) {
-      this.presentAlert("El correo es inválido.");
+      this.presentAlert("Error", "El correo es inválido.");
       return;
     }
 
     // Validar el tamaño de la contraseña
     if (this.password.length < 4 || this.password.length > 8) {
-      this.presentAlert("Contraseña inválida");
+      this.presentAlert("Error", "Contraseña inválida");
       return;
     }
 
@@ -77,12 +75,12 @@ export class LoginPage implements OnInit {
     if (mailuser) {
         // código para manejar mailuser
     } else {
-        console.error("mailuser no encontrado");
+        console.error("Error","mailuser no encontrado");
     }
     
     // Verificamos si datosUsuario es null o undefined
     if (!datosUsuario) {
-      this.presentAlert("El usuario no está registrado.");
+      this.presentAlert("Error","El usuario no está registrado.");
       console.log(this.mailuser, 'Error, no se encuentra en la BD');
       return; // Detenemos el proceso si no hay datos
     }
@@ -94,7 +92,7 @@ export class LoginPage implements OnInit {
       console.log("Usuario autenticado correctamente");
     } else if (this.mailuser === datosUsuario.mailuser && this.password !== datosUsuario.password) {
       // Si la contraseña no coincide, muestra error
-      this.presentAlert("Contraseña incorrecta.");
+      this.presentAlert("Error","Contraseña incorrecta.");
       console.log("Contraseña incorrecta");
     }
 
