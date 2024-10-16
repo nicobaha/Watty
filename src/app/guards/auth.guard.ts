@@ -7,18 +7,22 @@ export const authGuard: CanActivateFn = (route, state) => {
   const router = inject(Router);
   const isAuthenticated = authService.getAuthToken();
 
-  // Redirige a 'tabs' si el usuario ya está autenticado e intenta acceder a 'login', 'register' o 'recover-pw'
-  if (isAuthenticated && (state.url === '/login' || state.url === '/register' || state.url === '/recover-pw')) {
-    router.navigate(['/tabs']);
-    return false; // Bloquea el acceso a la página de autenticación
+  // Si el usuario está autenticado
+  if (isAuthenticated) {
+    // Si el usuario intenta acceder a 'login', 'register' o 'recover-pw', redirige a 'tabs'
+    if (state.url === '/login' || state.url === '/register' || state.url === '/recover-pw') {
+      router.navigate(['/tabs']);
+      return false;
+    }
+  } else {
+    // Si el usuario no está autenticado
+    // Si intenta acceder a 'tabs', 'tabs-old' o 'tutorial', redirige a 'login'
+    if (state.url === '/tabs' || state.url === '/tabs-old' || state.url === '/tutorial') {
+      router.navigate(['/login']);
+      return false;
+    }
   }
 
-  // Redirige a 'login' si el usuario no está autenticado e intenta acceder a 'tabs' o 'tabs-old'
-  if (!isAuthenticated && (state.url === '/tabs' || state.url === '/tabs-old')) {
-    router.navigate(['/login']);
-    return false; // Bloquea el acceso a las páginas protegidas
-  }
-
-  // Permite el acceso a la ruta solicitada
+  // Si cumple con las condiciones, permite el acceso a la ruta solicitada
   return true;
 };

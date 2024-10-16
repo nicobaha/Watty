@@ -35,7 +35,8 @@ const routes: Routes = [
   },
   {
     path: 'tutorial',
-    loadChildren: () => import('./tutorial/tutorial.module').then( m => m.TutorialPageModule)
+    loadChildren: () => import('./tutorial/tutorial.module').then( m => m.TutorialPageModule),
+    canActivate:[authGuard]
   },
   {
     path: '**',
