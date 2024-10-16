@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Router  } from '@angular/router';
 import { AlertController } from '@ionic/angular';
 import { LocalStorageService } from '../services/local-storage.service';
+import { TuyaService } from '../services/tuya.service';
+
 
 @Component({
   selector: 'app-tab3',
