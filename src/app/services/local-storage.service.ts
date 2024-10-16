@@ -15,7 +15,6 @@ export class LocalStorageService {
   //2. Función para obtener datos
   ObtenerDato(clave: string){
     const valor = localStorage.getItem(clave);
-
     //Declarar ? es como hacer un if - else, si funciona da el JSON sino retorna el null
     return valor ? JSON.parse(valor) :  null;
   }
