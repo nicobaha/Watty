@@ -38,7 +38,7 @@ export class LoginPage implements OnInit {
 
   login() {
     //Obtiene los datos del local Storage, en este caso obtiene Usuario que contiene todos sus datos.
-    const datosUsuario = this.localS.ObtenerDato('Usuario');    
+    const datosUsuario = this.localS.ObtenerDato('Usuario');  
 
     // Validar si faltan tanto el correo como la contraseña
     if (!this.mailuser && !this.password) {
@@ -71,29 +71,21 @@ export class LoginPage implements OnInit {
       return;
     }
 
-    const mailuser = document.getElementById("mailuser");
-    if (mailuser) {
-        // código para manejar mailuser
-    } else {
-        console.error("Error","mailuser no encontrado");
-    }
-    
-    // Verificamos si datosUsuario es null o undefined
+    // Verificar si el usuario está registrado
     if (!datosUsuario) {
-      this.presentAlert("Error","El usuario no está registrado.");
-      console.log(this.mailuser, 'Error, no se encuentra en la BD');
-      return; // Detenemos el proceso si no hay datos
+      return; // Detener el proceso si no hay datos
     }
 
-    // Aquí validamos las credenciales ingresadas en el formulario de login
+    // Validar las credenciales ingresadas
     if (this.mailuser === datosUsuario.mailuser && this.password === datosUsuario.password) {
       // Si el correo y la contraseña coinciden, redirige al tab1
       this.router.navigate(['./tabs/tab1']);
       console.log("Usuario autenticado correctamente");
     } else if (this.mailuser === datosUsuario.mailuser && this.password !== datosUsuario.password) {
       // Si la contraseña no coincide, muestra error
-      this.presentAlert("Error","Contraseña incorrecta.");
-      console.log("Contraseña incorrecta");
+      this.presentAlert("Error", "Contraseña incorrecta.");
+    } else {
+      this.presentAlert("Error", "El usuario no se encuentra registrado.");
     }
 
   }
