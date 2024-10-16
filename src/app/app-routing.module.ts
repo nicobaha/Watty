@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
+import { authGuard } from './guards/auth.guard';
 
 const routes: Routes = [
   {
@@ -9,23 +10,28 @@ const routes: Routes = [
   },
   {
     path: 'tabs',
-    loadChildren: () => import('./tabs/tabs.module').then(m => m.TabsPageModule)
+    loadChildren: () => import('./tabs/tabs.module').then(m => m.TabsPageModule),
+    canActivate:[authGuard]
   },
   {
     path: 'login',
-    loadChildren: () => import('./login/login.module').then( m => m.LoginPageModule)
+    loadChildren: () => import('./login/login.module').then( m => m.LoginPageModule),
+    canActivate:[authGuard]
   },
   {
     path: 'register',
-    loadChildren: () => import('./register/register.module').then( m => m.RegisterPageModule)
+    loadChildren: () => import('./register/register.module').then( m => m.RegisterPageModule),
+    canActivate:[authGuard]
   },
   {
     path: 'recover-pw',
-    loadChildren: () => import('./recover-pw/recover-pw.module').then( m => m.RecoverPWPageModule)
+    loadChildren: () => import('./recover-pw/recover-pw.module').then( m => m.RecoverPWPageModule),
+    canActivate:[authGuard]
   },
   {
     path: 'tabs-old',
-    loadChildren: () => import('./tabs-old/tabs-old.module').then( m => m.TabsOldPageModule)
+    loadChildren: () => import('./tabs-old/tabs-old.module').then( m => m.TabsOldPageModule),
+    canActivate:[authGuard]
   },
   {
     path: 'tutorial',
