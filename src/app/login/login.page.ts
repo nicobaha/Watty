@@ -17,6 +17,38 @@ export class LoginPage implements OnInit {
 
   constructor(private router: Router, private alertController: AlertController,  private localS : LocalStorageService) { }
 
+  ionViewWillEnter() {
+    console.log('ionViewWillEnter: Preparando la vista de Login.');
+    const rememberMeData = this.localS.ObtenerDato('usuario');
+    if (rememberMeData && rememberMeData.mailuser && rememberMeData.password) {
+      this.mailuser = rememberMeData.mailuser;
+      this.password = rememberMeData.password;
+      this.rememberMe = true;
+      console.log('Datos de usuario cargados:', rememberMeData);
+    } else {
+      // En caso de que no haya datos o estén incompletos
+      this.mailuser = '';
+      this.password = '';
+      this.rememberMe = false;
+      console.log('No se encontraron datos de usuario en LocalStorage.');
+    }
+  }
+
+  // Se ejecuta cuando la vista ya es completamente visible
+  ionViewDidEnter() {
+    console.log('ionViewDidEnter: La vista de Login es visible.');
+  }
+
+  // Se ejecuta antes de que la vista comience a salir
+  ionViewWillLeave() {
+    console.log('ionViewWillLeave: Saliendo de la vista de Login.');
+  }
+
+  // Se ejecuta después de que la vista ya no es visible
+  ionViewDidLeave() {
+    console.log('ionViewDidLeave: La vista de Login ya no es visible.');
+  }
+  
   ngOnInit() {
   }
 

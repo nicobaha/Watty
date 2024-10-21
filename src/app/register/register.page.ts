@@ -21,7 +21,21 @@ export class RegisterPage implements OnInit {
 
   constructor(private router: Router, private alertController: AlertController, private localS : LocalStorageService) { }
 
+  ionViewWillEnter() {
+    console.log('ionViewWillEnter: Preparando la vista de register.');
+  }
+  ionViewDidEnter() {
+    console.log('ionViewDidEnter: La vista de register es visible.');
+  }
+  ionViewWillLeave() {
+    console.log('ionViewWillLeave: Saliendo de la vista de register.');
+  }
+  ionViewDidLeave() {
+    console.log('ionViewDidLeave: La vista de register ya no es visible.');
+  }
+  
   ngOnInit() {}
+  
 
   // Método que permite mostrar una alerta.
   async presentAlert(header: string, message: string) {

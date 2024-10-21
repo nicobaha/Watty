@@ -20,6 +20,19 @@ export class Tab2Page {
  costPerMonth = 0;
  totalCost = 0;
 
+ ionViewWillEnter() {
+  console.log('ionViewWillEnter: Preparando la vista de tabs>tab2.');
+}
+ionViewDidEnter() {
+  console.log('ionViewDidEnter: La vista de tabs>tab2 es visible.');
+}
+ionViewWillLeave() {
+  console.log('ionViewWillLeave: Saliendo de la vista de tabs>tab2.');
+}
+ionViewDidLeave() {
+  console.log('ionViewDidLeave: La vista de tabs>tab2 ya no es visible.');
+}
+
  ngOnInit() {
    this.calculateSummary();
  }

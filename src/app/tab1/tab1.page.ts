@@ -13,6 +13,19 @@ export class Tab1Page implements OnInit{
 
   ledStatus: string = 'Desconocido';
 
+  ionViewWillEnter() {
+    console.log('ionViewWillEnter: Preparando la vista de tabs>tab1.');
+  }
+  ionViewDidEnter() {
+    console.log('ionViewDidEnter: La vista de tabs>tab1 es visible.');
+  }
+  ionViewWillLeave() {
+    console.log('ionViewWillLeave: Saliendo de la vista de tabs>tab1.');
+  }
+  ionViewDidLeave() {
+    console.log('ionViewDidLeave: La vista de tabs>tab1 ya no es visible.');
+  }
+
   ngOnInit(): void{
   }
 

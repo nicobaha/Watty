@@ -17,6 +17,19 @@ export class Tab3Page implements OnInit {
   nombre: string = '';
   mailuser: string='';
   celular: string = '';
+
+  ionViewWillEnter() {
+    console.log('ionViewWillEnter: Preparando la vista de tabs>tab3.');
+  }
+  ionViewDidEnter() {
+    console.log('ionViewDidEnter: La vista de tabs>tab3 es visible.');
+  }
+  ionViewWillLeave() {
+    console.log('ionViewWillLeave: Saliendo de la vista de tabs>tab3.');
+  }
+  ionViewDidLeave() {
+    console.log('ionViewDidLeave: La vista de tabs>tab3 ya no es visible.');
+  }
   
   ngOnInit() {
     const datosUsuario = this.localstorage.ObtenerDato('Usuario');

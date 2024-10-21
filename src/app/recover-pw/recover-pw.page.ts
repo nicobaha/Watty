@@ -16,6 +16,19 @@ export class RecoverPWPage implements OnInit {
 
   constructor(private router: Router, private alertController: AlertController) { }
 
+  ionViewWillEnter() {
+    console.log('ionViewWillEnter: Preparando la vista de recover-pw.');
+  }
+  ionViewDidEnter() {
+    console.log('ionViewDidEnter: La vista de recover-pw es visible.');
+  }
+  ionViewWillLeave() {
+    console.log('ionViewWillLeave: Saliendo de la vista de recover-pw.');
+  }
+  ionViewDidLeave() {
+    console.log('ionViewDidLeave: La vista de recover-pw ya no es visible.');
+  }
+
   ngOnInit() {
   }
 
