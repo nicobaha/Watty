@@ -119,7 +119,6 @@ export class RegisterPage implements OnInit {
     // Si todo está correcto, navega a la página de login
     this.localS.GuardarDato('Usuario', datosUsuario);
     // Obtener el usuario registrado (Prueba)
-    console.log("usuario registrado...")
     this.presentAlert('¡Felicidades!','¡Usuario Registrado con Exito!');
     this.router.navigate(['./login']);
     // Limpiará los campos.

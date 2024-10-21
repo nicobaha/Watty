@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { Router  } from '@angular/router';
 import { AlertController } from '@ionic/angular';
 import { LocalStorageService } from '../services/local-storage.service';
-import { TuyaService } from '../services/tuya.service';
 
 
 @Component({
@@ -54,9 +53,9 @@ export class Tab3Page implements OnInit {
   }
 
   logOut(){
-    this.presentAlert("Hasta pronto","Su sesión ha sido cerrada.");
-    this.router.navigate(['./login']);
-    console.log('Sesión Cerrada.')
+    localStorage.removeItem('isAuthenticated');
+    this.router.navigate(['/login']);
+    console.log('Sesión cerrada');
   }
 
   deleteAccount(){
