@@ -91,7 +91,7 @@ export class RegisterPage implements OnInit {
 
     // Validar la contraseña
     if (this.password.length < 4 || this.password.length > 8) {
-      this.presentAlert('Error','La contraseña debe tener mínimo 8 carácteres y máximo 8.');
+      this.presentAlert('Error','La contraseña debe tener mínimo 4 carácteres y máximo 8.');
       return;
     }
 
