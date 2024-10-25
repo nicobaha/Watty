@@ -10,12 +10,12 @@
 <ion-content [fullscreen]="true">
   <ion-card>
     <ion-card-header>
-      <ion-card-title>Ambiente - Casa</ion-card-title>
+      <ion-card-title>Casa</ion-card-title>
     </ion-card-header>
     <ion-card-content>
       <ion-grid>
         <ion-row>
-          <ion-col>Total de Habitaciones: 4</ion-col>
+          <ion-col>Total de Habitaciones: 5</ion-col>
         </ion-row>
         <ion-row>
           <ion-col>Consumo actual: 110kWh</ion-col>
@@ -26,5 +26,11 @@
       </ion-grid>
     </ion-card-content>
   </ion-card>
+
+  <ion-fab slot="fixed" vertical="bottom" horizontal="end" class="BotonFlotante">
+    <ion-fab-button class="boton-fab-personalizado" (click)="abrirModal()">
+      <ion-icon name="add-outline"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
 </ion-content>
 

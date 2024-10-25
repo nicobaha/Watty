@@ -12,3 +12,13 @@ ion-label h2{
     font-size: 1.2em;
     font-weight:500;
 }
+
+.boton-fab-personalizado {
+    --background: linear-gradient(45deg, #A8E063, #56AB2F);
+    --color: white; /* Color del ícono */
+  }
+  
+  .boton-fab-personalizado:hover {
+    --background: linear-gradient(45deg, #A8E063, #56AB2F);
+    filter: brightness(0.9); /* Efecto de hover opcional */
+  }

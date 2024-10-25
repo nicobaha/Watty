@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { ModalController } from '@ionic/angular';
+import { AmbientePage } from '../ambiente/ambiente.page';
 
 @Component({
   selector: 'app-tab4',
@@ -7,7 +10,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class Tab4Page implements OnInit {
 
-  constructor() { }
+  constructor(private roueter : Router, private modalController: ModalController) { }
 
   ionViewWillEnter() {
     console.log('ionViewWillEnter: Preparando la vista de tabs>tab4.');
@@ -23,6 +26,15 @@ export class Tab4Page implements OnInit {
   }
 
   ngOnInit() {
+  }
+
+  async abrirModal() {
+    const modal = await this.modalController.create({
+      component: AmbientePage,
+      cssClass: 'small-modal',  // Asegúrate de que esta clase sea la misma que usaremos en los estilos.
+      backdropDismiss: true     // Opción para cerrar tocando fuera del modal.
+    });
+    return await modal.present();
   }
 
 }
