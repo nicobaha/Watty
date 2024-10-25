@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Camera, CameraResultType, CameraSource } from '@capacitor/camera';
 
 @Component({
   selector: 'app-tab2',
@@ -6,6 +7,7 @@ import { Component } from '@angular/core';
   styleUrls: ['tab2.page.scss']
 })
 export class Tab2Page {
+  capturedImage: string | undefined;
 
   appliances = [
     { name: 'Microondas', kWh: 0.8, costPerHour: 3, image: 'assets/images/microwave.png' },
@@ -45,6 +47,28 @@ ionViewDidLeave() {
    // Calcular los costos basados en el total de kWh
    this.costPerMonth = this.costPerMonth; // 
    this.totalCost = this.costPerMonth;
+}
+
+async openCamera() {
+  try {
+    // Verifica si los permisos están concedidos
+    const permissions = await Camera.requestPermissions();
+    if (permissions.camera !== 'granted') {
+      console.error('Permiso de cámara denegado');
+      return;
+    }
+
+    const image = await Camera.getPhoto({
+      quality: 90,
+      allowEditing: false,
+      resultType: CameraResultType.DataUrl,
+      source: CameraSource.Camera,
+    });
+
+    this.capturedImage = image.dataUrl;
+  } catch (error) {
+    console.error('Error al abrir la cámara:', error);
+  }
 }
 
 }
