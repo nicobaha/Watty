@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { AlertController } from '@ionic/angular'; // Importa AlertController
+import { AlertController } from '@ionic/angular';
 import { LocalStorageService } from '../services/local-storage.service';
+import { FirestoreService } from '../services/firestore.service'; 
+
 
 @Component({
   selector: 'app-login',
@@ -15,7 +17,7 @@ export class LoginPage implements OnInit {
   rememberMe: boolean = false;
   showPassword = false; 
 
-  constructor(private router: Router, private alertController: AlertController,  private localS : LocalStorageService) { }
+  constructor(private router: Router, private alertController: AlertController,  private localS : LocalStorageService, private firestoreService: FirestoreService,) { }
 
   ionViewWillEnter() {
     console.log('ionViewWillEnter: Preparando la vista de Login.');
@@ -69,61 +71,56 @@ export class LoginPage implements OnInit {
   }
 
   login() {
-    //Obtiene los datos del local Storage, en este caso obtiene Usuario que contiene todos sus datos.
-    const datosUsuario = this.localS.ObtenerDato('Usuario'); 
+    if (!this.validarCampos()) return;
 
-    // Validar si faltan tanto el correo como la contraseña
-    if (!this.mailuser && !this.password) {
-      this.presentAlert("Error","Ingrese su correo y contraseña.");
-      return;
-    }
+    this.firestoreService.verificarUsuario(this.mailuser, this.password).subscribe(valido => {
+      if (valido) {
+        // Guardar el correo en LocalStorage
+        this.localS.GuardarDato('correo', this.mailuser);
 
-    // Validar si falta el correo
-    if (!this.mailuser) {
-      this.presentAlert("Error", "Ingrese un correo.");
-      return;
-    }
+        if (this.rememberMe) {
+          this.localS.GuardarDato('usuario', { mailuser: this.mailuser, password: this.password });
+        } else {
+          this.localS.ElimnarDato('usuario');
+        }
 
-    // Validar si falta la contraseña
-    if (!this.password) {
-      this.presentAlert("Error", "Ingrese su contraseña.");
-      return;
-    }
-
-    // Validar el formato del correo, i Servirá para no discriminar entre mayúsculas y minúsculas
-    const emailRegex = /^[^\s@]+@[^\s@]+\.(com|cl)$/i;
-    if (!emailRegex.test(this.mailuser)) {
-      this.presentAlert("Error", "El correo es inválido.");
-      return;
-    }
-
-    // Validar el tamaño de la contraseña
-    if (this.password.length < 4 || this.password.length > 8) {
-      this.presentAlert("Error", "Contraseña inválida");
-      return;
-    }
-
-    // Verificar si el usuario está registrado
-    if (!datosUsuario) {
-      this.presentAlert('Error', 'El usuario no está registrado.');
-      return; // Detener el proceso si no hay datos
-    }
-
-    if (this.mailuser === datosUsuario.mailuser && this.password === datosUsuario.password) {
-      localStorage.setItem('isAuthenticated', 'true');
-      this.router.navigate(['/tabs']);
-      console.log('Usuario autenticado correctamente');
-    } else {
-      this.presentAlert('Error', 'Correo o contraseña incorrectos.');
-    }
+        localStorage.setItem('isAuthenticated', 'true');
+        console.log('Usuario autenticado correctamente');
+        this.router.navigate(['/tabs']); // Navegar a la página principal
+      } else {
+        this.presentAlert('Error', 'Correo o contraseña incorrectos.');
+      }
+    }, error => {
+      console.error('Error al autenticar:', error);
+      this.presentAlert('Error', 'Ocurrió un problema al intentar iniciar sesión.');
+    });
   }
 
-  //*Método que permite ir al "Registro"
+  validarCampos(): boolean {
+    if (!this.mailuser || !this.password) {
+      this.presentAlert('Error', 'Por favor ingrese su correo y contraseña.');
+      return false;
+    }
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.(com|cl)$/i;
+    if (!emailRegex.test(this.mailuser)) {
+      this.presentAlert('Error', 'El correo es inválido.');
+      return false;
+    }
+
+    if (this.password.length < 4 || this.password.length > 8) {
+      this.presentAlert('Error', 'Contraseña inválida.');
+      return false;
+    }
+
+    return true;
+  }
+
   signup() {
     this.router.navigate(['./register']);
   }
 
-  recover(){
+  recover() {
     this.router.navigate(['./recover-pw']);
   }
 }

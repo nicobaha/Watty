@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AlertController } from '@ionic/angular';
 import { Router } from '@angular/router';
-import { TuyaService } from '../services/tuya.service';
+import { LocalStorageService } from '../services/local-storage.service';
 
 @Component({
   selector: 'app-tab1',
@@ -31,7 +31,7 @@ export class Tab1Page implements OnInit{
 
   Texts:String = 'Bienvenido a Watty';
 
-  constructor(private alertController: AlertController, private router : Router) {}
+  constructor(private alertController: AlertController, private router : Router, private localS: LocalStorageService) {}
 
   async showAlert() {
     const alert = await this.alertController.create({

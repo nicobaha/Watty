@@ -1,7 +1,9 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { combineLatest } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { Observable } from 'rxjs';
+import { map, catchError } from 'rxjs/operators';
+import { of } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -33,11 +35,19 @@ export class FirestoreService {
   }
 
   // Método para inicio de sesión
-  validarCredenciales(correo: string, password: string) {
+  verificarUsuario(correo: string, password: string): Observable<boolean> {
     return this.firestore.collection('USUARIO', ref =>
       ref.where('mailuser', '==', correo).where('password', '==', password)
     ).get().pipe(
-      map(snapshot => snapshot.size > 0) // Retorna true si encuentra coincidencia
+      map(snapshot => {
+        const encontrado = !snapshot.empty; // Verifica si el usuario fue encontrado
+        console.log('Usuario encontrado:', encontrado);
+        return encontrado;
+      }),
+      catchError(error => {
+        console.error('Error al verificar usuario:', error);
+        return of(false); // Devuelve false como observable en caso de error
+      })
     );
   }
 }
