@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { AlertController } from '@ionic/angular'; // Importa AlertController
-import { LocalStorageService } from '../services/local-storage.service';
+import { AlertController } from '@ionic/angular';
+import { FirestoreService } from '../services/firestore.service';
+import firebase from 'firebase/compat/app'; // Importa Firebase App
 
 @Component({
   selector: 'app-register',
@@ -9,7 +10,6 @@ import { LocalStorageService } from '../services/local-storage.service';
   styleUrls: ['./register.page.scss'],
 })
 export class RegisterPage implements OnInit {
-
   nombre: string = '';
   rut: string = '';
   mailuser: string = '';
@@ -19,109 +19,109 @@ export class RegisterPage implements OnInit {
   showPassword = false;
   AceptaCondiciones: boolean = false;
 
-  constructor(private router: Router, private alertController: AlertController, private localS : LocalStorageService) { }
+  constructor(
+    private router: Router,
+    private alertController: AlertController,
+    private firestoreService: FirestoreService
+  ) {}
 
-  ionViewWillEnter() {
-    console.log('ionViewWillEnter: Preparando la vista de register.');
-  }
-  ionViewDidEnter() {
-    console.log('ionViewDidEnter: La vista de register es visible.');
-  }
-  ionViewWillLeave() {
-    console.log('ionViewWillLeave: Saliendo de la vista de register.');
-  }
-  ionViewDidLeave() {
-    console.log('ionViewDidLeave: La vista de register ya no es visible.');
-  }
-  
   ngOnInit() {}
-  
 
-  // Método que permite mostrar una alerta.
   async presentAlert(header: string, message: string) {
     const alert = await this.alertController.create({
       header: header,
       message: message,
-      buttons: ['OK']
+      buttons: ['OK'],
     });
 
     await alert.present();
   }
 
-  //Método para mostrar la contraseña
   togglePassword() {
-    this.showPassword = !this.showPassword; // Alternar entre mostrar/ocultar
+    this.showPassword = !this.showPassword;
   }
 
-  // Método de validación del formulario
-  SingUp() {
-    // Validar si todos los campos están llenos
+  // Registro después de validar correo y RUT
+  async SingUp() {
+    if (!this.validarFormulario()) return;
+
+    // Verificar si el correo o RUT ya existen en Firestore
+    this.firestoreService.verificarCorreoYRut(this.mailuser, this.rut).subscribe(async (existe) => {
+      if (existe) {
+        this.presentAlert('Error', 'El correo o RUT ya están registrados. Usa otros datos.');
+      } else {
+        // Procede con el registro del usuario si no hay conflictos
+        const datosUsuario = {
+          nombre: this.nombre,
+          rut: this.rut,
+          mailuser: this.mailuser,
+          celular: this.celular,
+          password: this.password,
+          fechaCreacion: firebase.firestore.Timestamp.now(),
+        };
+
+        try {
+          await this.firestoreService.registrarUsuario(this.rut, datosUsuario);
+          this.presentAlert('¡Felicidades!', '¡Usuario Registrado con Éxito!');
+          this.router.navigate(['./login']);
+          this.limpiarCampos();
+        } catch (error) {
+          console.error('Error al registrar el usuario:', error);
+          this.presentAlert('Error', 'Hubo un problema al registrar el usuario.');
+        }
+      }
+    });
+  }
+
+  validarFormulario(): boolean {
     if (!this.nombre || !this.rut || !this.mailuser || !this.celular || !this.password || !this.ConfirmPassword) {
-      this.presentAlert('Error','Faltan rellenar campos');
-      return;
+      this.presentAlert('Error', 'Faltan rellenar campos');
+      return false;
     }
 
-    // Validar Nombre
     const nameRegex = /^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]{1,30}$/;
     if (!nameRegex.test(this.nombre)) {
-      this.presentAlert('Error','Ingrese su nombre correctamente.');
-      return;
+      this.presentAlert('Error', 'Ingrese su nombre correctamente.');
+      return false;
     }
 
-    // Validar el rut
     const rutRegex = /^\d{7,8}-[kK\d]$/;
     if (!rutRegex.test(this.rut)) {
-      this.presentAlert('Error','Ingrese un rut válido.');
-      return;
+      this.presentAlert('Error', 'Ingrese un RUT válido.');
+      return false;
     }
 
-    // Validar el formato del correo
     const emailRegex = /^[^\s@]+@[^\s@]+\.(com|cl)$/i;
     if (!emailRegex.test(this.mailuser)) {
-      this.presentAlert('Error','El correo es inválido.');
-      return;
+      this.presentAlert('Error', 'El correo es inválido.');
+      return false;
     }
 
-    // Validar el formato del número de celular
     const phoneRegex = /^\+569\d{8}$/;
     if (!phoneRegex.test(this.celular)) {
-      this.presentAlert('Error','Número de celular inválido.');
-      return;
+      this.presentAlert('Error', 'Número de celular inválido.');
+      return false;
     }
 
-    // Validar la contraseña
     if (this.password.length < 4 || this.password.length > 8) {
-      this.presentAlert('Error','La contraseña debe tener mínimo 4 carácteres y máximo 8.');
-      return;
+      this.presentAlert('Error', 'La contraseña debe tener mínimo 4 y máximo 8 caracteres.');
+      return false;
     }
 
-    // Validar que ambas contraseñas sean iguales
     if (this.password !== this.ConfirmPassword) {
-      this.presentAlert('Error','Las contraseñas no coinciden.');
-      return;
+      this.presentAlert('Error', 'Las contraseñas no coinciden.');
+      return false;
     }
 
-    // Validar si los términos y condiciones ha sido aceptado
     if (!this.AceptaCondiciones) {
-      this.presentAlert('Para continuar','Debe aceptar los términos y condiciones.');
-      return;
+      this.presentAlert('Para continuar', 'Debe aceptar los términos y condiciones.');
+      return false;
     }
 
-    //Constante que tendrá todos las variables que quiero guardar.
-    const datosUsuario = {
-      nombre: this.nombre,
-      rut: this.rut,
-      mailuser: this.mailuser,
-      celular: this.celular,
-      password: this.password,
-    };
+    return true;
+  }
 
-    // Si todo está correcto, navega a la página de login
-    this.localS.GuardarDato('Usuario', datosUsuario);
-    // Obtener el usuario registrado (Prueba)
-    this.presentAlert('¡Felicidades!','¡Usuario Registrado con Exito!');
-    this.router.navigate(['./login']);
-    // Limpiará los campos.
+  limpiarCampos() {
     this.nombre = '';
     this.rut = '';
     this.mailuser = '';
