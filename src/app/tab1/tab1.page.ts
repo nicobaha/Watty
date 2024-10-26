@@ -16,7 +16,7 @@ export class Tab1Page implements OnInit {
 
   ionViewWillEnter() {
     console.log('ionViewWillEnter: Preparando la vista de tabs>tab1.');
-    this.loadDeviceStatus(); // Verificamos el estado del dispositivo al entrar a la vista
+    this.refreshStatus(); // Verificamos el estado del dispositivo al entrar a la vista
   }
 
   ionViewDidEnter() {
@@ -31,9 +31,7 @@ export class Tab1Page implements OnInit {
     console.log('ionViewDidLeave: La vista de tabs>tab1 ya no es visible.');
   }
 
-  ngOnInit(): void {
-    // Lógica que quieras añadir en la inicialización del componente
-  }
+  ngOnInit(): void {}
 
   constructor(
     private alertController: AlertController,
@@ -41,7 +39,8 @@ export class Tab1Page implements OnInit {
     private localS: LocalStorageService
   ) {}
 
-  async loadDeviceStatus() {
+  // Método para refrescar el estado del LED
+  async refreshStatus() {
     try {
       this.isLedOn = await TuyaService.getDeviceStatus();
       this.ledStatus = this.isLedOn ? 'Encendido' : 'Apagado';
@@ -49,6 +48,19 @@ export class Tab1Page implements OnInit {
     } catch (error) {
       console.error('Error al obtener el estado del LED:', error);
       this.ledStatus = 'Error al obtener estado';
+    }
+  }
+
+  // Método para alternar el estado del LED (encender/apagar)
+  async toggleLedState() {
+    try {
+      const newState = !this.isLedOn; // Cambiamos el estado al opuesto
+      await TuyaService.setDeviceState(newState); // Enviamos el comando
+      this.isLedOn = newState; // Actualizamos el estado localmente
+      this.ledStatus = newState ? 'Encendido' : 'Apagado';
+      console.log('LED cambiado a:', this.ledStatus);
+    } catch (error) {
+      console.error('Error al cambiar el estado del LED:', error);
     }
   }
 
@@ -73,4 +85,4 @@ export class Tab1Page implements OnInit {
   volver() {
     this.router.navigate(['/tabs-old/tab1']);
   }
-}
+} 

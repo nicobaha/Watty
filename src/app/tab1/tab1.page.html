@@ -16,145 +16,158 @@
   </ion-toolbar>
 </ion-header>
 
-
 <ion-content [fullscreen]="true">
-  <!-- Imagen del logo de Watty con clase personalizada -->
-  <ion-img src="assets/images/wattybienvenida.png" alt="Watty Logo" ></ion-img>
+  <!-- Imagen del logo de Watty -->
+  <ion-img src="assets/images/wattybienvenida.png" alt="Watty Logo"></ion-img>
 
-  <!--estadisticas de consumo-->
+ 
+  <!-- Estadísticas de consumo -->
   <ion-grid>
     <ion-row>
-      <ion-col>  <ion-card>
-        <ion-icon name="flash-outline" size="large"></ion-icon>
-        <ion-card-header>
-          <ion-card-title>Consumo total</ion-card-title>  </ion-card-header>
-        <ion-card-content>
-          230,4W
-        </ion-card-content>
-      </ion-card></ion-col>
+      <ion-col>
+        <ion-card>
+          <ion-icon name="flash-outline" size="large"></ion-icon>
+          <ion-card-header>
+            <ion-card-title>Consumo total</ion-card-title>
+          </ion-card-header>
+          <ion-card-content>230,4W</ion-card-content>
+        </ion-card>
+      </ion-col>
 
-      <ion-col>  <ion-card class="second-card" (click)="showAlert()">
-        <ion-icon name="alert-circle-outline" size="large"></ion-icon>
-        <ion-card-header>
-          <ion-card-title>Calefactor cocina</ion-card-title>
-         
-        </ion-card-header>
-      
-        <ion-card-content>
-          32,1W
-        </ion-card-content>
-      </ion-card></ion-col>
+      <ion-col>
+        <ion-card class="second-card" (click)="showAlert()">
+          <ion-icon name="alert-circle-outline" size="large"></ion-icon>
+          <ion-card-header>
+            <ion-card-title>Calefactor cocina</ion-card-title>
+          </ion-card-header>
+          <ion-card-content>32,1W</ion-card-content>
+        </ion-card>
+      </ion-col>
 
-      <ion-col>  <ion-card>
-        <ion-icon name="calendar-number-outline" size="large"></ion-icon>
-        <ion-card-header>
-          <ion-card-title>Meta mensual</ion-card-title>
-         
-        </ion-card-header>
-      
-        <ion-card-content>
-          3.472,4W
-        </ion-card-content>
-      </ion-card></ion-col>
+      <ion-col>
+        <ion-card>
+          <ion-icon name="calendar-number-outline" size="large"></ion-icon>
+          <ion-card-header>
+            <ion-card-title>Meta mensual</ion-card-title>
+          </ion-card-header>
+          <ion-card-content>3.472,4W</ion-card-content>
+        </ion-card>
+      </ion-col>
     </ion-row>
   </ion-grid>
 
+  <!-- Acordeón "¿Sabías qué?" -->
+  <ion-text><h4>¿Sabías cuánto consumen? 👀</h4></ion-text>
+  <ion-accordion-group>
+    <ion-accordion value="first">
+      <ion-item slot="header" color="light">
+        <ion-label>Electrodomésticos cocina</ion-label>
+      </ion-item>
+      <div class="ion-padding" slot="content">
+        <ion-list>
+          <ion-item detail="true">
+            <ion-label>Cocina eléctrica</ion-label>
+            <ion-note slot="end">2000 watts por hora</ion-note>
+          </ion-item>
+          <ion-item detail="true">
+            <ion-label>Horno</ion-label>
+            <ion-note slot="end">1500 watts por hora</ion-note>
+          </ion-item>
+          <ion-item detail="true">
+            <ion-label>Microondas</ion-label>
+            <ion-note slot="end">1000 watts por hora</ion-note>
+          </ion-item>
+          <ion-item detail="true">
+            <ion-label>Refrigerador</ion-label>
+            <ion-note slot="end">150 watts por hora</ion-note>
+          </ion-item>
+          <ion-item detail="true">
+            <ion-label>Batidora</ion-label>
+            <ion-note slot="end">300 watts por hora</ion-note>
+          </ion-item>
+        </ion-list>
+      </div>
+    </ion-accordion>
 
+    <ion-accordion value="second">
+      <ion-item slot="header" color="light">
+        <ion-label>Artefactos uso personal</ion-label>
+      </ion-item>
+      <div class="ion-padding" slot="content">
+        <ion-list>
+          <ion-item detail="true">
+            <ion-label>Secador de pelo</ion-label>
+            <ion-note slot="end">100 watts por hora</ion-note>
+          </ion-item>
+          <ion-item detail="true">
+            <ion-label>Plancha</ion-label>
+            <ion-note slot="end">1200 watts por hora</ion-note>
+          </ion-item>
+          <ion-item detail="true">
+            <ion-label>Afeitadora eléctrica</ion-label>
+            <ion-note slot="end">20 watts por hora</ion-note>
+          </ion-item>
+          <ion-item detail="true">
+            <ion-label>Depiladora</ion-label>
+            <ion-note slot="end">30 watts por hora</ion-note>
+          </ion-item>
+          <ion-item detail="true">
+            <ion-label>Cepillo de dientes eléctrico</ion-label>
+            <ion-note slot="end">2 watts por hora</ion-note>
+          </ion-item>
+        </ion-list>
+      </div>
+    </ion-accordion>
 
+    <ion-accordion value="third">
+      <ion-item slot="header" color="light">
+        <ion-label>Otros artefactos</ion-label>
+      </ion-item>
+      <div class="ion-padding" slot="content">
+        <ion-list>
+          <ion-item detail="true">
+            <ion-label>Televisor</ion-label>
+            <ion-note slot="end">200 watts por hora</ion-note>
+          </ion-item>
+          <ion-item detail="true">
+            <ion-label>Computadora</ion-label>
+            <ion-note slot="end">300 watts por hora</ion-note>
+          </ion-item>
+          <ion-item detail="true">
+            <ion-label>Lámpara</ion-label>
+            <ion-note slot="end">60 watts por hora</ion-note>
+          </ion-item>
+          <ion-item detail="true">
+            <ion-label>Ventilador</ion-label>
+            <ion-note slot="end">75 watts por hora</ion-note>
+          </ion-item>
+          <ion-item detail="true">
+            <ion-label>Lavadora</ion-label>
+            <ion-note slot="end">500 watts por hora</ion-note>
+          </ion-item>
+        </ion-list>
+      </div>
+    </ion-accordion>
+  </ion-accordion-group>
 
-  <!-- acordeon ¿sabias quee?-->
-<ion-text> <h4> ¿Sabias cuánto consumen? 👀</h4></ion-text>
+   <!-- Estado del LED y Control -->
+   <ion-card>
+    <ion-card-header>
+      <ion-card-title>Estado del LED</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
 
+     
+      <p>El LED está: <strong>{{ isLedOn ? 'Encendido' : 'Apagado' }}</strong></p>
+      <ion-button expand="block" (click)="toggleLedState()">
 
+         
+        {{ isLedOn ? 'Apagar LED' : 'Encender LED' }}
+      </ion-button>
 
-<ion-accordion-group>
-  <ion-accordion value="first">
-    <ion-item slot="header" color="light">
-      <ion-label>Electrodomesticos cocina</ion-label>
-    </ion-item>
-    <div class="ion-padding" slot="content">
-      <ion-list>
-        <ion-item detail="true">
-          <ion-label>Cocina eléctrica</ion-label>
-          <ion-note slot="end">2000 watts por hora</ion-note>
-        </ion-item>
-        <ion-item detail="true">
-          <ion-label>Horno</ion-label>
-          <ion-note slot="end">1500 watts por hora</ion-note>
-        </ion-item>
-        <ion-item detail="true">
-          <ion-label>Microondas</ion-label>
-          <ion-note slot="end">1000 watts por hora</ion-note>
-        </ion-item>
-        <ion-item detail="true">
-          <ion-label>Refrigerador</ion-label>
-          <ion-note slot="end">150 watts por hora</ion-note>
-        </ion-item>
-        <ion-item detail="true">
-          <ion-label>Batidora</ion-label>
-          <ion-note slot="end">300 watts por hora</ion-note>
-        </ion-item>
-      </ion-list>
-    </div>
-  </ion-accordion>
-  <ion-accordion value="second">
-    <ion-item slot="header" color="light">
-      <ion-label>Artefactos uso personal</ion-label>
-    </ion-item>
-    <div class="ion-padding" slot="content">
-      <ion-list>
-        <ion-item detail="true">
-          <ion-label>Secador de pelo</ion-label>
-          <ion-note slot="end">100 watts por hora</ion-note>
-        </ion-item>
-        <ion-item detail="true">
-          <ion-label>Plancha</ion-label>
-          <ion-note slot="end">1200 watts por hora</ion-note>
-        </ion-item>
-        <ion-item detail="true">
-          <ion-label>Afeitadora eléctrica</ion-label>
-          <ion-note slot="end">20 watts por hora</ion-note>
-        </ion-item>
-        <ion-item detail="true">
-          <ion-label>Depiladora</ion-label>
-          <ion-note slot="end">30 watts por hora</ion-note>
-        </ion-item>
-        <ion-item detail="true">
-          <ion-label>Cepillo de dientes eléctrico</ion-label>
-          <ion-note slot="end">2 watts por hora</ion-note>
-        </ion-item>
-      </ion-list>
-    </div>
-  </ion-accordion>
-  <ion-accordion value="third">
-    <ion-item slot="header" color="light">
-      <ion-label>Otros artefactos</ion-label>
-    </ion-item>
-    <div class="ion-padding" slot="content">
-      <ion-list>
-        <ion-item detail="true">
-          <ion-label>Televisor</ion-label>
-          <ion-note slot="end">200 watts por hora</ion-note>
-        </ion-item>
-        <ion-item detail="true">
-          <ion-label>Computadora</ion-label>
-          <ion-note slot="end">300 watts por hora</ion-note>
-        </ion-item>
-        <ion-item detail="true">
-          <ion-label>Lámpara</ion-label>
-          <ion-note slot="end">60 watts por hora</ion-note>
-        </ion-item>
-        <ion-item detail="true">
-          <ion-label>Ventilador</ion-label>
-          <ion-note slot="end">75 watts por hora</ion-note>
-        </ion-item>
-        <ion-item detail="true">
-          <ion-label>Lavadora</ion-label>
-          <ion-note slot="end">500 watts por hora</ion-note>
-        </ion-item>
-      </ion-list>
-    </div>
-  </ion-accordion>
-</ion-accordion-group>
-  
+      
+      <ion-button expand="block" color="medium" (click)="refreshStatus()">Refrescar Estado</ion-button>
+    </ion-card-content>
+  </ion-card>
+
 </ion-content>

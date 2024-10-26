@@ -8,11 +8,11 @@ const BASE_URL = 'https://openapi.tuyaus.com/v1.0';
 const DEVICE_ID = 'ebdc821cecd2a55a3bfugw';
 
 export class TuyaService {
-  private static token: string = ''; // Token inicializado como vacío
+  private static token: string = '';
 
-  // Obtener token de acceso
+  // Método para obtener el token de acceso
   static async getAccessToken(): Promise<string> {
-    if (this.token) return this.token; // Reutiliza el token si ya existe
+    if (this.token) return this.token;
 
     const timestamp = Date.now().toString();
     const sign = this.generateSign(timestamp);
@@ -27,7 +27,7 @@ export class TuyaService {
         },
       });
 
-      this.token = response.data.result.access_token || ''; // Asignamos un string vacío si es null
+      this.token = response.data.result.access_token || '';
       return this.token;
     } catch (error) {
       console.error('Error al obtener el token de acceso:', error);
@@ -41,7 +41,7 @@ export class TuyaService {
     return crypto.HmacSHA256(stringToSign, ACCESS_SECRET).toString(crypto.enc.Hex);
   }
 
-  // Obtener el estado del dispositivo LED
+  // Método para obtener el estado del LED
   static async getDeviceStatus(): Promise<boolean> {
     const token = await this.getAccessToken();
 
@@ -52,7 +52,6 @@ export class TuyaService {
         },
       });
 
-      // Busca el estado de encendido/apagado en la respuesta
       const status = response.data.result.find((item: any) => item.code === 'switch_led');
       return status ? status.value : false;
     } catch (error) {
@@ -60,4 +59,29 @@ export class TuyaService {
       throw error;
     }
   }
-}
+
+  // **Nuevo Método**: Cambiar el estado del LED
+  static async setDeviceState(isOn: boolean): Promise<void> {
+    const token = await this.getAccessToken();
+
+    try {
+      const response = await axios.post(
+        `${BASE_URL}/devices/${DEVICE_ID}/commands`,
+        {
+          commands: [{ code: 'switch_led', value: isOn }],
+        },
+        {
+          headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json',
+          },
+        }
+      );
+
+      console.log('Comando enviado con éxito:', response.data);
+    } catch (error) {
+      console.error('Error al cambiar el estado del dispositivo:', error);
+      throw error;
+    }
+  }
+} 
