@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router  } from '@angular/router';
 import { AlertController } from '@ionic/angular';
 import { LocalStorageService } from '../services/local-storage.service';
+import { FirestoreService } from '../services/firestore.service';
 
 
 @Component({
@@ -11,7 +12,7 @@ import { LocalStorageService } from '../services/local-storage.service';
 })
 export class Tab3Page implements OnInit {
 
-  constructor(private router:Router, private localstorage : LocalStorageService, private alertController: AlertController) { }
+  constructor(private router:Router, private localstorage : LocalStorageService, private alertController: AlertController, private firestoreService: FirestoreService,) { }
 
   nombre: string = '';
   mailuser: string='';
@@ -31,15 +32,32 @@ export class Tab3Page implements OnInit {
   }
   
   ngOnInit() {
-    const datosUsuario = this.localstorage.ObtenerDato('Usuario');
+    const correo = this.localstorage.ObtenerDato('correo'); // Obtener el correo del LocalStorage
+    console.log('Correo encontrado en LocalStorage:', correo);
 
-    if (datosUsuario) {
-      this.nombre = datosUsuario.nombre || '';
-      this.mailuser = datosUsuario.mailuser || '';
-      this.celular = datosUsuario.celular || '';
+    if (correo) {
+      this.cargarDatosUsuario(correo); // Cargar los datos del usuario desde Firestore
     } else {
-      console.log('No se logró obtener el usuario');
+      console.warn('No se encontró un correo en LocalStorage.');
     }
+  }
+
+  cargarDatosUsuario(correo: string) {
+    this.firestoreService.obtenerUsuarioPorCorreo(correo).subscribe(usuario => {
+      if (usuario) {
+        this.nombre = usuario.nombre || '';
+        this.mailuser = usuario.mailuser || '';
+        this.celular = usuario.celular || '';
+        console.log('Datos del usuario cargados:', usuario);
+      } else {
+        console.warn('No se encontraron datos del usuario.');
+        this.presentAlert('Error', 'No se encontraron datos del usuario.');
+        this.router.navigate(['/login']);
+      }
+    }, error => {
+      console.error('Error al cargar los datos del usuario:', error);
+      this.presentAlert('Error', 'Ocurrió un problema al cargar los datos del usuario.');
+    });
   }
 
   async presentAlert(header: string, message: string) {

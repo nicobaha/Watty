@@ -34,7 +34,7 @@ export class FirestoreService {
     );
   }
 
-  // Método para inicio de sesión
+  // Función para inicio de sesión
   verificarUsuario(correo: string, password: string): Observable<boolean> {
     return this.firestore.collection('USUARIO', ref =>
       ref.where('mailuser', '==', correo).where('password', '==', password)
@@ -47,6 +47,27 @@ export class FirestoreService {
       catchError(error => {
         console.error('Error al verificar usuario:', error);
         return of(false); // Devuelve false como observable en caso de error
+      })
+    );
+  }
+
+  //Función para obtener datos del usuario.
+  obtenerUsuarioPorCorreo(correo: string): Observable<any | null> {
+    return this.firestore.collection('USUARIO', ref =>
+      ref.where('mailuser', '==', correo)
+    ).get().pipe(
+      map(snapshot => {
+        if (snapshot.empty) {
+          console.warn('No se encontró un usuario con ese correo.');
+          return null;
+        }
+        const usuario = snapshot.docs[0].data(); // Obtener los datos del primer documento encontrado
+        console.log('Usuario encontrado:', usuario);
+        return usuario;
+      }),
+      catchError(error => {
+        console.error('Error al obtener el usuario:', error);
+        return of(null); // Retornar null en caso de error
       })
     );
   }
