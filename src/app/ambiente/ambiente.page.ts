@@ -27,6 +27,16 @@ export class AmbientePage implements OnInit {
     
   }
 
+  async presentAlert(header: string, message: string) {
+    const alert = await this.alertController.create({
+      header: header,
+      message: message,
+      buttons: ['OK']
+    });
+
+    await alert.present();
+  }
+
   async abrirModal() {
     const modal = await this.modalController.create({
       component: AmbienteModalPage,
@@ -35,4 +45,5 @@ export class AmbientePage implements OnInit {
     });
     return await modal.present();
   }
+
 }

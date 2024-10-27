@@ -73,6 +73,51 @@ export class FirestoreService {
     );
   }
 
+  //Para la ventana AMBIENTES, mostraá lo que hay de manera dinámica
+  obtenerAmbientesUsuario(rutUsuario: string): Observable<any[]> {
+    return this.firestore
+      .collection('USUARIO')
+      .doc(rutUsuario)
+      .collection('AMBIENTE')
+      .snapshotChanges()
+      .pipe(
+        map(actions => actions.map(a => {
+          const data = a.payload.doc.data();
+          const id = a.payload.doc.id;
+          return { id, ...data }; // Devolvemos los datos y el ID del documento
+        })),
+        catchError(error => {
+          console.error('Error al obtener los ambientes:', error);
+          return of([]);
+        })
+      );
+  }
+
+  // Para la ventana HOGAR-MODAL (Ambientes)
+  agregarAmbiente(rutUsuario: string, ambiente: any): Promise<void> {
+    const ambienteRef = this.firestore
+      .collection('USUARIO')
+      .doc(rutUsuario)
+      .collection('AMBIENTE')
+      .doc();
+
+    return ambienteRef.set(ambiente).then(() => {
+      console.log('Ambiente agregado correctamente.');
+    }).catch((error) => {
+      console.error('Error al agregar ambiente:', error);
+      throw error;
+    });
+  }
+
+
+
+
+
+
+
+
+
+
   // Guardar un ambiente en la subcolección del usuario usando su RUT
   agregarAmbienteParaUsuario(rutUsuario: string, ambiente: any): Promise<void> {
     const usuarioRef = this.firestore.collection('USUARIO').doc(rutUsuario);
