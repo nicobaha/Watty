@@ -10,11 +10,20 @@
 <ion-content class="ion-padding">
   <ion-item class="custom-input">
     <ion-label position="floating">Nombre del Ambiente</ion-label>
-    <ion-input [(ngModel)]="nombreAmbiente"></ion-input>
+    <ion-input [(ngModel)]="nombrePersonalizado"></ion-input>
   </ion-item>
+
+  <ion-item>
+    <ion-label>Tipo de Ambiente</ion-label>
+    <ion-select [(ngModel)]="ambienteSeleccionado" placeholder="Seleccione tipo">
+      <ion-select-option *ngFor="let ambiente of tiposAmbiente" [value]="ambiente.id">
+        {{ ambiente.Nombre_TipoAmb }}
+      </ion-select-option>
+    </ion-select>
+  </ion-item>
+
+  
   <div class="button-container">
-    <ion-button expand="block" shape="round" (click)="guardarAmbiente()">
-      Guardar
-    </ion-button>
+    <ion-button expand="block" (click)="guardarAmbiente()">Guardar</ion-button>
   </div>
 </ion-content>

@@ -71,4 +71,30 @@ export class FirestoreService {
       })
     );
   }
+
+  // Guardar un ambiente en la subcolección del usuario usando su RUT
+  // Guardar un ambiente en la subcolección del usuario usando su RUT
+  agregarAmbienteParaUsuario(rutUsuario: string, ambiente: any): Promise<void> {
+    const usuarioRef = this.firestore.collection('USUARIO').doc(rutUsuario);
+    
+    // Añadir un nuevo documento con un ID automático dentro de la subcolección AMBIENTE
+    return usuarioRef.collection('AMBIENTE').add(ambiente)
+      .then(() => console.log('Ambiente agregado correctamente.'))
+      .catch(error => {
+        console.error('Error al agregar el ambiente:', error);
+        throw error;
+      });
+  }
+  
+  
+  // Obtener los tipos de ambiente desde Firestore (AMBIENTE.PAGE)
+  obtenerTiposDeAmbiente(): Observable<any[]> {
+    return this.firestore.collection('TIPO_AMBIENTE').get().pipe(
+      map(snapshot => snapshot.docs.map(doc => ({ id: doc.id, ...(doc.data() as any) }))),
+      catchError(error => {
+        console.error('Error al obtener los tipos de ambiente:', error);
+        return [];
+      })
+    );
+  }
 }
