@@ -1,0 +1,52 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>{{ modo === 'agregar' ? 'Agregar Artefacto' : 'Editar Artefacto' }}</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="dismissModal()">Cerrar</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <form (ngSubmit)="guardarArtefacto()">
+    <ion-item>
+      <ion-label>Seleccionar Artefacto</ion-label>
+      <ion-select [(ngModel)]="selectedArtefacto" name="artefacto" (ionChange)="onArtefactoChange($event)" required>
+        <ion-select-option *ngFor="let artefacto of artefactos" [value]="artefacto.nom_artefacto">
+          {{ artefacto.nom_artefacto }}
+        </ion-select-option>
+      </ion-select>
+    </ion-item>
+
+
+    <ion-item>
+      <ion-label>Potencia (W)</ion-label>
+      <ion-input [(ngModel)]="potencia" type="number" name="potencia" required
+                 [placeholder]="'Agrega la potencia'"></ion-input>
+    </ion-item>
+    
+    <ion-item>
+      <ion-label>Cantidad</ion-label>
+      <ion-input [(ngModel)]="cantidad" type="number" name="cantidad" required
+                 [placeholder]="'Agrega la cantidad'"></ion-input>
+    </ion-item>
+    
+    <ion-item>
+      <ion-label>Uso Estimado (horas)</ion-label>
+      <ion-input [(ngModel)]="usoEstimado" type="number" name="usoEstimado" required
+                 [placeholder]="'Agrega el uso estimado en horas'"></ion-input>
+    </ion-item>
+    
+    <ion-item>
+      <ion-label>Días Estimados</ion-label>
+      <ion-input [(ngModel)]="diasEstimados" type="number" name="diasEstimados" required
+                 [placeholder]="'Agrega los días estimados'"></ion-input>
+    </ion-item>
+    
+
+    <ion-button expand="full" type="submit">
+      {{ modo === 'agregar' ? 'Agregar' : 'Guardar' }}
+    </ion-button>
+    
+  </form>
+</ion-content>

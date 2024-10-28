@@ -1,42 +1,39 @@
 <ion-header class="ion-no-border">
   <ion-toolbar class="toolbar">
-    <ion-buttons slot="start">
-      <!--<ion-back-button default-href="#"></ion-back-button>-->
-    </ion-buttons>
     <ion-title>Calculadora</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <!--searching bar-->
-
   <ion-toolbar>
     <ion-searchbar></ion-searchbar>
   </ion-toolbar>
 
   <ion-fab slot="fixed" vertical="bottom" horizontal="end" class="BotonFlotante">
-    <ion-fab-button class="boton-fab-personalizado" expand="block" (click)="openCamera()">
+    <ion-fab-button class="boton-fab-personalizado" (click)="openCamera()">
       <ion-icon name="camera-outline"></ion-icon>
     </ion-fab-button>
   </ion-fab>    
 
-  <!--/searching bar-->
+  <ion-fab slot="fixed" vertical="bottom" horizontal="start" class="BotonFlotante">
+    <ion-fab-button class="boton-fab-personalizado" (click)="abrirAgregarEditarArtefacto('agregar')">
+      <ion-icon name="add-outline"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
 
-  <!--cards-->
-  <ion-item *ngFor="let appliance of appliances">
-    <ion-thumbnail slot="start">
-      <img [src]="appliance.image">
-    </ion-thumbnail>
-    <ion-label>
-      <h2>{{ appliance.name }}</h2>
-      <p>{{ appliance.kWh }} kWh</p>
-      <p>${{ appliance.costPerHour }}/m</p>
-    </ion-label>
-  </ion-item>
-  <!--/cards-->
+  <!-- Appliance Cards -->
+  <ion-list>
+    <ion-item *ngFor="let appliance of appliances" (click)="abrirAgregarEditarArtefacto('editar', appliance)">
+      <ion-label>
+        <h2>{{ appliance.name || 'Sin nombre' }}</h2>
+        <p>{{ appliance.kWh }} kWh</p>
+        <p>${{ appliance.costPerMonth }}/m</p>
+      </ion-label>
+    </ion-item>
+  </ion-list>
 
- <!--summary card-->
- <ion-card>
+  <!-- Summary Card -->
+  <ion-card>
     <ion-card-header>
       <ion-card-title>Resumen de consumo</ion-card-title>
       <ion-card-subtitle>{{ currentDate }}</ion-card-subtitle>
@@ -45,19 +42,17 @@
       <ion-grid>
         <ion-row>
           <ion-col>Total kWh</ion-col>
-          <ion-col class="ion-text-right">{{ totalKw }}</ion-col>
+          <ion-col class="ion-text-right">{{ totalKw | number: '1.2-2' }} kWh</ion-col>
         </ion-row>
         <ion-row>
-          <ion-col>por mes</ion-col>
-          <ion-col class="ion-text-right">${{ costPerMonth }}</ion-col>
+          <ion-col>Costo mensual</ion-col>
+          <ion-col class="ion-text-right">${{ costPerMonth | number: '1.2-2' }}</ion-col>
         </ion-row>
         <ion-row>
-          <ion-col>Total</ion-col>
-          <ion-col class="ion-text-right"><strong>${{ totalCost }}</strong></ion-col>
+          <ion-col>Total (incluye costo fijo)</ion-col>
+          <ion-col class="ion-text-right"><strong>${{ totalCost | number: '1.2-2' }}</strong></ion-col>
         </ion-row>
       </ion-grid>
     </ion-card-content>
   </ion-card>
-  <!--/summary card-->
-
 </ion-content>

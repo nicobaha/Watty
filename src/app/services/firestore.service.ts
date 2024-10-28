@@ -29,7 +29,7 @@ export class FirestoreService {
 
     return combineLatest([correoQuery, rutQuery]).pipe(
       map(([correoSnapshot, rutSnapshot]) =>
-        correoSnapshot.size > 0 || rutSnapshot.size > 0 // Verificamos si alguno ya existe
+        correoSnapshot.size > 0 || rutSnapshot.size > 0 // Verifica si alguno ya existe
       )
     );
   }
@@ -61,7 +61,7 @@ export class FirestoreService {
           console.warn('No se encontró un usuario con ese correo.');
           return null;
         }
-        const usuario = snapshot.docs[0].data(); // Obtener los datos del primer documento encontrado
+        const usuario = snapshot.docs[0].data(); // Obtiene los datos del primer documento encontrado
         console.log('Usuario encontrado:', usuario);
         return usuario;
       }),
@@ -98,7 +98,7 @@ export class FirestoreService {
     );
   }
 
-  //Para la ventana AMBIENTES, mostraá lo que hay de manera dinámica
+  //Para la ventana AMBIENTES, mostrará lo que hay de manera dinámica
   obtenerAmbientesUsuario(rutUsuario: string): Observable<any[]> {
     return this.firestore
       .collection('USUARIO')
@@ -109,12 +109,47 @@ export class FirestoreService {
         map(actions => actions.map(a => {
           const data = a.payload.doc.data();
           const id = a.payload.doc.id;
-          return { id, ...data }; // Devolvemos los datos y el ID del documento
+          return { id, ...data }; // Devuelve los datos y el ID del documento
         })),
         catchError(error => {
           console.error('Error al obtener los ambientes:', error);
           return of([]);
         })
       );
+  }
+  
+  // Método para agregar un nuevo artefacto
+  agregarArtefacto(artefacto: any): Promise<void> {
+    return this.firestore.collection('CALCULADORA').add(artefacto)
+      .then(() => console.log('Artefacto agregado correctamente.'))
+      .catch(error => {
+        console.error('Error al agregar el artefacto:', error);
+        throw error;
+      });
+  }
+
+  // Método para editar un artefacto existente
+  editarArtefacto(id: string, data: any): Promise<void> {
+    return this.firestore.collection('CALCULADORA').doc(id).update(data)
+      .then(() => console.log('Artefacto editado correctamente.'))
+      .catch(error => {
+        console.error('Error al editar el artefacto:', error);
+        throw error;
+      });
+  }
+
+  // Método para obtener todos los artefactos
+  obtenerArtefactos(): Observable<any[]> {
+    return this.firestore.collection('CALCULADORA').snapshotChanges().pipe(
+      map(actions => actions.map(a => {
+        const data = a.payload.doc.data() as any;
+        const id = a.payload.doc.id;
+        return { id, ...data }; // ID con los datos del documento
+      })),
+      catchError(error => {
+        console.error('Error al obtener los artefactos:', error);
+        return of([]); // Retorna un array vacío en caso de error
+      })
+    );
   }
 }
