@@ -44,16 +44,6 @@ const routes: Routes = [
     canActivate:[authGuard]
   },
   {
-    path: 'hogar-modal',
-    loadChildren: () => import('./hogar-modal/hogar-modal.module').then( m => m.HogarModalPageModule),
-    canActivate:[authGuard]
-  },
-  {
-    path: 'ambiente-modal',
-    loadChildren: () => import('./ambiente-modal/ambiente-modal.module').then( m => m.AmbienteModalPageModule),
-    canActivate:[authGuard]
-  },
-  {
     path: '**',
     loadChildren: () => import('./e404/e404.module').then( m => m.E404PageModule)
   },

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ModalController } from '@ionic/angular';
-import { HogarModalPage } from '../hogar-modal/hogar-modal.page';
+import { AmbientePage } from '../ambiente/ambiente.page';
 
 @Component({
   selector: 'app-tab4',
@@ -10,7 +10,7 @@ import { HogarModalPage } from '../hogar-modal/hogar-modal.page';
 })
 export class Tab4Page implements OnInit {
 
-  constructor(private router : Router, private modalController: ModalController) { }
+  constructor(private roueter : Router, private modalController: ModalController) { }
 
   ionViewWillEnter() {
     console.log('ionViewWillEnter: Preparando la vista de tabs>tab4.');
@@ -30,15 +30,11 @@ export class Tab4Page implements OnInit {
 
   async abrirModal() {
     const modal = await this.modalController.create({
-      component: HogarModalPage,
+      component: AmbientePage,
       cssClass: 'small-modal',  // Asegúrate de que esta clase sea la misma que usaremos en los estilos.
       backdropDismiss: true     // Opción para cerrar tocando fuera del modal.
     });
     return await modal.present();
-  }
-
-  DetalleAmbiente(){
-    this.router.navigate(['./ambiente']);
   }
 
 }
