@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ModalController } from '@ionic/angular';
 import { AmbientePage } from '../ambiente/ambiente.page';
+import { FirestoreService } from '../services/firestore.service';
+import { LocalStorageService } from '../services/local-storage.service';
 
 @Component({
   selector: 'app-tab4',
@@ -10,7 +12,13 @@ import { AmbientePage } from '../ambiente/ambiente.page';
 })
 export class Tab4Page implements OnInit {
 
-  constructor(private roueter : Router, private modalController: ModalController) { }
+  ambientes: any[] = [];
+  rutUsuario: string = ''; 
+
+  constructor(private router : Router, 
+              private modalController: ModalController, 
+              private firestoreService: FirestoreService,
+              private localS : LocalStorageService) { }
 
   ionViewWillEnter() {
     console.log('ionViewWillEnter: Preparando la vista de tabs>tab4.');
@@ -26,6 +34,22 @@ export class Tab4Page implements OnInit {
   }
 
   ngOnInit() {
+    const correo = this.localS.ObtenerDato('correo'); // Obtener correo del usuario
+    this.firestoreService.obtenerUsuarioPorCorreo(correo).subscribe(usuario => {
+      if (usuario && usuario.rut) {
+        this.rutUsuario = usuario.rut;
+        this.cargarAmbientes(); // Cargar ambientes del usuario
+      } else {
+        console.warn('No se encontró el RUT del usuario.');
+      }
+    });
+  }
+
+  cargarAmbientes() {
+    this.firestoreService.obtenerAmbientesUsuario(this.rutUsuario).subscribe(ambientes => {
+      this.ambientes = ambientes; // Almacenar los ambientes obtenidos
+      console.log('Ambientes cargados:', ambientes);
+    });
   }
 
   async abrirModal() {

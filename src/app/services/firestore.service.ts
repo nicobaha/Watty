@@ -97,4 +97,24 @@ export class FirestoreService {
       })
     );
   }
+
+  //Para la ventana AMBIENTES, mostraá lo que hay de manera dinámica
+  obtenerAmbientesUsuario(rutUsuario: string): Observable<any[]> {
+    return this.firestore
+      .collection('USUARIO')
+      .doc(rutUsuario)
+      .collection('AMBIENTE')
+      .snapshotChanges()
+      .pipe(
+        map(actions => actions.map(a => {
+          const data = a.payload.doc.data();
+          const id = a.payload.doc.id;
+          return { id, ...data }; // Devolvemos los datos y el ID del documento
+        })),
+        catchError(error => {
+          console.error('Error al obtener los ambientes:', error);
+          return of([]);
+        })
+      );
+  }
 }

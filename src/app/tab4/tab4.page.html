@@ -8,24 +8,32 @@
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-card>
-    <ion-card-header>
-      <ion-card-title>Casa</ion-card-title>
-    </ion-card-header>
-    <ion-card-content>
-      <ion-grid>
-        <ion-row>
-          <ion-col>Total de Habitaciones: 5</ion-col>
-        </ion-row>
-        <ion-row>
-          <ion-col>Consumo actual: 110kWh</ion-col>
-        </ion-row>
-        <ion-row>
-          <ion-col>Nose xddd:</ion-col>
-        </ion-row>
-      </ion-grid>
-    </ion-card-content>
-  </ion-card>
+  <ion-list>
+    <!-- Iteramos sobre los ambientes -->
+    <ion-card *ngFor="let ambiente of ambientes">
+      <ion-card-header>
+        <ion-card-title>{{ ambiente.NombreAmbiente }}</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <ion-grid>
+          <ion-row>
+            <ion-col>Nombre ambiente: {{ ambiente.NombrePer_Ambiente }}</ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col>Consumo actual: {{ ambiente.ConsumoActual || 0 }} kWh</ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col>Última actualización: {{ ambiente.fechaCreacion?.toDate() | date: 'medium' }}</ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-card-content>
+      <div class="button-container">
+        <ion-button expand="block" >
+          Detalle Ambiente
+        </ion-button>
+      </div>
+    </ion-card>
+  </ion-list>
 
   <ion-fab slot="fixed" vertical="bottom" horizontal="end" class="BotonFlotante">
     <ion-fab-button class="boton-fab-personalizado" (click)="abrirModal()">
