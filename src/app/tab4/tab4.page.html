@@ -28,9 +28,8 @@
         </ion-grid>
       </ion-card-content>
       <div class="button-container">
-        <ion-button expand="block" >
-          Detalle Ambiente
-        </ion-button>
+        <ion-button expand="block" (click)="DetalleAmbiente(ambiente.id)"> Detalle Ambiente </ion-button>
+        <ion-button expand="block">Borrar</ion-button>
       </div>
     </ion-card>
   </ion-list>

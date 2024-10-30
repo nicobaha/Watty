@@ -1,0 +1,24 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Detalle del Ambiente</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list *ngIf="electrodomesticos.length > 0; else noData">
+    <ion-item *ngFor="let electro of electrodomesticos">
+      <ion-label>
+        <h2>{{ electro.Nombre_Elect }}</h2>
+        <p>Consumo: {{ electro.ConsumokWh_Elect }} kWh</p>
+        <p>Horas de uso: {{ electro.HorasUso_Elect }} horas</p>
+        <p>Potencia: {{ electro.PotenciaW_Elect }} W</p>
+      </ion-label>
+    </ion-item>
+  </ion-list>
+  
+  <ng-template #noData>
+    <ion-text color="medium">
+      <p>No hay electrodomésticos registrados para este ambiente.</p>
+    </ion-text>
+  </ng-template>  
+</ion-content>

@@ -44,10 +44,14 @@ const routes: Routes = [
     canActivate:[authGuard]
   },
   {
+    path: 'detalle-ambiente',
+    loadChildren: () => import('./detalle-ambiente/detalle-ambiente.module').then( m => m.DetalleAmbientePageModule),
+    canActivate:[authGuard]
+  },
+  {
     path: '**',
     loadChildren: () => import('./e404/e404.module').then( m => m.E404PageModule)
   },
-
 ];
 
 @NgModule({

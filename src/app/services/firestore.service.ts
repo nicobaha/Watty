@@ -73,7 +73,6 @@ export class FirestoreService {
   }
 
   // Guardar un ambiente en la subcolección del usuario usando su RUT
-  // Guardar un ambiente en la subcolección del usuario usando su RUT
   agregarAmbienteParaUsuario(rutUsuario: string, ambiente: any): Promise<void> {
     const usuarioRef = this.firestore.collection('USUARIO').doc(rutUsuario);
     
@@ -152,4 +151,28 @@ export class FirestoreService {
       })
     );
   }
+
+  // Función para obtener los electrodomésticos de un ambiente específico usando el AmbienteId
+  obtenerElectrodomesticosPorAmbiente(ambienteId: string): Observable<any[]> {
+    console.log('Ambiente ID recibidoooo:', ambienteId); // Verifica el ID recibido
+  
+    return this.firestore
+      .collection('AMBIENTE')
+      .doc(ambienteId)
+      .collection('ELECTRODOMESTICO')
+      .snapshotChanges()
+      .pipe(
+        map(actions => actions.map(a => {
+          const data = a.payload.doc.data();
+          const id = a.payload.doc.id;
+          console.log('Electrodoméstico encontrado', data)
+          return { id, ...data }; // Devuelve los datos y el ID del documento
+        })),
+        catchError(error => {
+          console.error('Error al obtener los ambientes:', error);
+          return of([]);
+        })
+      );
+  }  
+
 }

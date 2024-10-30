@@ -61,4 +61,11 @@ export class Tab4Page implements OnInit {
     return await modal.present();
   }
 
+  DetalleAmbiente(id: string) {
+    this.localS.GuardarDato('ambienteId', id); // Guardar el ID del ambiente en LocalStorage
+    console.log('ID del Ambiente guardado en LocalStorage:', id);
+    this.router.navigate(['./detalle-ambiente']); // Navegar sin pasar el ID
+  }
+  
+
 }
