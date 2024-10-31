@@ -150,24 +150,6 @@
     </ion-accordion>
   </ion-accordion-group>
 
-   <!-- Estado del LED y Control -->
-   <ion-card>
-    <ion-card-header>
-      <ion-card-title>Estado del LED</ion-card-title>
-    </ion-card-header>
-    <ion-card-content>
 
-     
-      <p>El LED está: <strong>{{ isLedOn ? 'Encendido' : 'Apagado' }}</strong></p>
-      <ion-button expand="block" (click)="toggleLedState()">
-
-         
-        {{ isLedOn ? 'Apagar LED' : 'Encender LED' }}
-      </ion-button>
-
-      
-      <ion-button expand="block" color="medium" (click)="refreshStatus()">Refrescar Estado</ion-button>
-    </ion-card-content>
-  </ion-card>
 
 </ion-content>
