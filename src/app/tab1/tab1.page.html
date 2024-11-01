@@ -20,7 +20,6 @@
   <!-- Imagen del logo de Watty -->
   <ion-img src="assets/images/wattybienvenida.png" alt="Watty Logo"></ion-img>
 
- 
   <!-- Estadísticas de consumo -->
   <ion-grid>
     <ion-row>
@@ -150,6 +149,21 @@
     </ion-accordion>
   </ion-accordion-group>
 
+  <!-- API CLIMA -->
+  <ion-item>
+    <ion-label position="floating">Ciudad</ion-label>
+    <ion-input #cityInput></ion-input>
+  </ion-item>
 
+  <!-- Botón para obtener el clima, con "Puerto Montt" como valor predeterminado -->
+  <ion-button expand="full" (click)="getWeatherForCity(cityInput.value)">
+    Obtener Clima
+  </ion-button>
 
+  <!-- Muestra los datos del clima obtenidos -->
+  <div *ngIf="weatherData">
+    <h2>{{ weatherData.name }}</h2>
+    <p>Temperatura: {{ weatherData.main.temp }} °C</p>
+    <p>Clima: {{ weatherData.weather[0].description }}</p>
+  </div>
 </ion-content>

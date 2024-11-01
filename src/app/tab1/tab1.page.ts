@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { WeatherService } from '../services/weather.service';
 import { AlertController } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { LocalStorageService } from '../services/local-storage.service';
@@ -13,6 +14,33 @@ export class Tab1Page implements OnInit {
   ledStatus: string = 'Desconocido';
   isLedOn: boolean = false;
   Texts: string = 'Bienvenido a Watty';
+  public weatherData: any; // Variable para almacenar datos del clima
+
+  constructor(
+    private alertController: AlertController,
+    private router: Router,
+    private localS: LocalStorageService,
+    private weatherService: WeatherService // Inyección de WeatherService
+  ) {}
+
+  ngOnInit(): void {}
+
+  // Método para obtener el clima de una ciudad específica
+  getWeatherForCity(city: any) {
+    const cityName = city ? String(city) : 'Puerto Montt'; // Asigna "Puerto Montt" si no se proporciona una ciudad
+    this.getWeather(cityName);
+  }
+  async getWeather(city: string | null | undefined) {
+    const defaultCity = 'Puerto Montt';
+    const cityToFetch = city || defaultCity; // Usa "Puerto Montt" si el valor de city es null o undefined
+    
+    try {
+      this.weatherData = await this.weatherService.getWeather(cityToFetch);
+      console.log(`Datos del clima para ${cityToFetch}:`, this.weatherData);
+    } catch (error) {
+      console.error('Error al obtener el clima:', error);
+    }
+  }
 
   ionViewWillEnter() {
     console.log('ionViewWillEnter: Preparando la vista de tabs>tab1.');
@@ -30,14 +58,6 @@ export class Tab1Page implements OnInit {
   ionViewDidLeave() {
     console.log('ionViewDidLeave: La vista de tabs>tab1 ya no es visible.');
   }
-
-  ngOnInit(): void {}
-
-  constructor(
-    private alertController: AlertController,
-    private router: Router,
-    private localS: LocalStorageService
-  ) {}
 
   // Método para refrescar el estado del LED
   async refreshStatus() {
@@ -85,4 +105,4 @@ export class Tab1Page implements OnInit {
   volver() {
     this.router.navigate(['/tabs-old/tab1']);
   }
-} 
+}
