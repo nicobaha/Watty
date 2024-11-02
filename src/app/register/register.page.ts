@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AlertController } from '@ionic/angular';
-import { FirestoreService } from '../services/firestore.service';
-import firebase from 'firebase/compat/app'; // Importa Firebase App
+import { DatabaseService } from '../database.service';
 
 @Component({
   selector: 'app-register',
@@ -22,7 +21,7 @@ export class RegisterPage implements OnInit {
   constructor(
     private router: Router,
     private alertController: AlertController,
-    private firestoreService: FirestoreService
+    private dbService: DatabaseService,
   ) {}
 
   ngOnInit() {}
@@ -43,91 +42,71 @@ export class RegisterPage implements OnInit {
 
   // Registro después de validar correo y RUT
   async SingUp() {
-    if (!this.validarFormulario()) return;
-
-    // Verificar si el correo o RUT ya existen en Firestore
-    this.firestoreService.verificarCorreoYRut(this.mailuser, this.rut).subscribe(async (existe) => {
-      if (existe) {
-        this.presentAlert('Error', 'El correo o RUT ya están registrados. Usa otros datos.');
-      } else {
-        // Procede con el registro del usuario si no hay conflictos
-        const datosUsuario = {
-          nombre: this.nombre,
-          rut: this.rut,
-          mailuser: this.mailuser,
-          celular: this.celular,
-          password: this.password,
-          fechaCreacion: firebase.firestore.Timestamp.now(),
-        };
-
-        try {
-          await this.firestoreService.registrarUsuario(this.rut, datosUsuario);
-          this.presentAlert('¡Felicidades!', '¡Usuario Registrado con Éxito!');
-          this.router.navigate(['./login']);
-          this.limpiarCampos();
-        } catch (error) {
-          console.error('Error al registrar el usuario:', error);
-          this.presentAlert('Error', 'Hubo un problema al registrar el usuario.');
-        }
-      }
-    });
-  }
-
-  validarFormulario(): boolean {
+    // Validar si todos los campos están llenos
     if (!this.nombre || !this.rut || !this.mailuser || !this.celular || !this.password || !this.ConfirmPassword) {
-      this.presentAlert('Error', 'Faltan rellenar campos');
-      return false;
+      this.presentAlert('Error','Faltan rellenar campos.');
+      return;
     }
 
-    const nameRegex = /^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]{1,30}$/;
+    // Validar Nombre
+    const nameRegex = /^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]{1,50}$/;
     if (!nameRegex.test(this.nombre)) {
       this.presentAlert('Error', 'Ingrese su nombre correctamente.');
-      return false;
+      return;
     }
 
+    // Validar el rut
     const rutRegex = /^\d{7,8}-[kK\d]$/;
     if (!rutRegex.test(this.rut)) {
-      this.presentAlert('Error', 'Ingrese un RUT válido.');
-      return false;
+      this.presentAlert('Error','Ingrese un RUT válido.');
+      return;
     }
 
+    // Validar el formato del correo
     const emailRegex = /^[^\s@]+@[^\s@]+\.(com|cl)$/i;
     if (!emailRegex.test(this.mailuser)) {
-      this.presentAlert('Error', 'El correo es inválido.');
-      return false;
+      this.presentAlert('Error','El correo es inválido.');
+      return;
     }
 
+    // Validar el formato del número de celular
     const phoneRegex = /^\+569\d{8}$/;
     if (!phoneRegex.test(this.celular)) {
-      this.presentAlert('Error', 'Número de celular inválido.');
-      return false;
+      this.presentAlert('Error','Número de celular inválido.');
+      return;
     }
 
+    // Validar la contraseña
     if (this.password.length < 4 || this.password.length > 8) {
-      this.presentAlert('Error', 'La contraseña debe tener mínimo 4 y máximo 8 caracteres.');
-      return false;
+      this.presentAlert('Error','La contraseña debe tener mínimo 4 caracteres y máximo 8.');
+      return;
     }
 
+    // Validar que ambas contraseñas sean iguales
     if (this.password !== this.ConfirmPassword) {
       this.presentAlert('Error', 'Las contraseñas no coinciden.');
-      return false;
+      return;
     }
 
+    // Validar si los términos y condiciones han sido aceptados
     if (!this.AceptaCondiciones) {
-      this.presentAlert('Para continuar', 'Debe aceptar los términos y condiciones.');
-      return false;
+      this.presentAlert('Error','Debe aceptar los términos y condiciones.');
+      return;
     }
 
-    return true;
-  }
-
-  limpiarCampos() {
-    this.nombre = '';
-    this.rut = '';
-    this.mailuser = '';
-    this.celular = '';
-    this.password = '';
-    this.ConfirmPassword = '';
-    this.AceptaCondiciones = false;
+    try {
+      // Llamada al servicio para registrar al usuario
+      await this.dbService.registerUser(this.rut, this.nombre, this.mailuser, this.password, this.celular).toPromise();
+      this.presentAlert('¡Felicidades!','Usuario registrado con éxito.');
+      this.rut = '';
+      this.nombre = '';
+      this.mailuser = '';
+      this.celular= '';
+      this.password = '';
+      this.ConfirmPassword = '';
+      this.router.navigate(['./login']);
+    } catch (error) {
+      this.presentAlert('Error', 'No se pudo registrar el usuario.');
+    }
   }
 }

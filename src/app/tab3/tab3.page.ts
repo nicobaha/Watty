@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { Router  } from '@angular/router';
 import { AlertController } from '@ionic/angular';
 import { LocalStorageService } from '../services/local-storage.service';
-import { FirestoreService } from '../services/firestore.service';
 
 
 @Component({
@@ -12,11 +11,11 @@ import { FirestoreService } from '../services/firestore.service';
 })
 export class Tab3Page implements OnInit {
 
-  constructor(private router:Router, private localstorage : LocalStorageService, private alertController: AlertController, private firestoreService: FirestoreService,) { }
+  constructor(private router:Router, private localS : LocalStorageService, private alertController: AlertController) { }
 
-  nombre: string = '';
-  mailuser: string='';
-  celular: string = '';
+  nombreUser: string = '';
+  telefonoUser: string = '';
+  correoUser: string = '';
 
   ionViewWillEnter() {
     console.log('ionViewWillEnter: Preparando la vista de tabs>tab3.');
@@ -32,32 +31,17 @@ export class Tab3Page implements OnInit {
   }
   
   ngOnInit() {
-    const correo = this.localstorage.ObtenerDato('correo'); // Obtener el correo del LocalStorage
-    console.log('Correo encontrado en LocalStorage:', correo);
-
-    if (correo) {
-      this.cargarDatosUsuario(correo); // Cargar los datos del usuario desde Firestore
-    } else {
-      console.warn('No se encontró un correo en LocalStorage.');
-    }
+    const usuario = this.localS.ObtenerDato('user');
+      if (usuario) {
+        this.nombreUser = usuario.Nom_User;
+        this.correoUser = usuario.Correo_User;
+        this.telefonoUser = usuario.Celular_User;
+      } else {
+        console.warn('No se encontró información del usuario en el LocalStorage.');
+      }
   }
 
-  cargarDatosUsuario(correo: string) {
-    this.firestoreService.obtenerUsuarioPorCorreo(correo).subscribe(usuario => {
-      if (usuario) {
-        this.nombre = usuario.nombre || '';
-        this.mailuser = usuario.mailuser || '';
-        this.celular = usuario.celular || '';
-        console.log('Datos del usuario cargados:', usuario);
-      } else {
-        console.warn('No se encontraron datos del usuario.');
-        this.presentAlert('Error', 'No se encontraron datos del usuario.');
-        this.router.navigate(['/login']);
-      }
-    }, error => {
-      console.error('Error al cargar los datos del usuario:', error);
-      this.presentAlert('Error', 'Ocurrió un problema al cargar los datos del usuario.');
-    });
+  cargarDatosUsuario() {
   }
 
   async presentAlert(header: string, message: string) {
@@ -78,7 +62,7 @@ export class Tab3Page implements OnInit {
 
   deleteAccount(){
     this.presentAlert("Lamentamos tu partida","Su cuenta ha sido eliminada.");
-    this.localstorage.LimpiarDato();
+    this.localS.LimpiarDato();
     console.log('datos limpiados');
     this.router.navigate(['./login']);
   }

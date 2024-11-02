@@ -5,13 +5,13 @@
 </ion-header>
 
 <ion-content>
-  <ion-list *ngIf="electrodomesticos.length > 0; else noData">
-    <ion-item *ngFor="let electro of electrodomesticos">
+  <ion-list>
+    <ion-item>
       <ion-label>
-        <h2>{{ electro.Nombre_Elect }}</h2>
-        <p>Consumo: {{ electro.ConsumokWh_Elect }} kWh</p>
-        <p>Horas de uso: {{ electro.HorasUso_Elect }} horas</p>
-        <p>Potencia: {{ electro.PotenciaW_Elect }} W</p>
+        <h2>Nombre Electrodomestico</h2>
+        <p>Consumo:  kWh</p>
+        <p>Horas de uso:  horas</p>
+        <p>Potencia:  W</p>
       </ion-label>
     </ion-item>
   </ion-list>

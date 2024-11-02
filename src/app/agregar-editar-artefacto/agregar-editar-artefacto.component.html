@@ -1,6 +1,6 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>{{ modo === 'agregar' ? 'Agregar Artefacto' : 'Editar Artefacto' }}</ion-title>
+    <ion-title></ion-title>
     <ion-buttons slot="end">
       <ion-button (click)="dismissModal()">Cerrar</ion-button>
     </ion-buttons>
@@ -8,12 +8,12 @@
 </ion-header>
 
 <ion-content>
-  <form (ngSubmit)="guardarArtefacto()">
+  <form>
     <ion-item>
       <ion-label>Seleccionar Artefacto</ion-label>
-      <ion-select [(ngModel)]="selectedArtefacto" name="artefacto" (ionChange)="onArtefactoChange($event)" required>
-        <ion-select-option *ngFor="let artefacto of artefactos" [value]="artefacto.nom_artefacto">
-          {{ artefacto.nom_artefacto }}
+      <ion-select [(ngModel)]="selectedArtefacto" name="artefacto" required>
+        <ion-select-option>
+
         </ion-select-option>
       </ion-select>
     </ion-item>
@@ -45,7 +45,6 @@
     
 
     <ion-button expand="full" type="submit">
-      {{ modo === 'agregar' ? 'Agregar' : 'Guardar' }}
     </ion-button>
     
   </form>

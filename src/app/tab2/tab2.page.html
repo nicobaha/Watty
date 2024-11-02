@@ -10,7 +10,7 @@
   </ion-toolbar>
 
   <ion-fab slot="fixed" vertical="bottom" horizontal="end" class="BotonFlotante">
-    <ion-fab-button class="boton-fab-personalizado" (click)="openCamera()">
+    <ion-fab-button class="boton-fab-personalizado">
       <ion-icon name="camera-outline"></ion-icon>
     </ion-fab-button>
   </ion-fab>    
@@ -23,11 +23,11 @@
 
   <!-- Appliance Cards -->
   <ion-list>
-    <ion-item *ngFor="let appliance of appliances" (click)="abrirAgregarEditarArtefacto('editar', appliance)">
+    <ion-item>
       <ion-label>
-        <h2>{{ appliance.name || 'Sin nombre' }}</h2>
-        <p>{{ appliance.kWh }} kWh</p>
-        <p>${{ appliance.costPerMonth }}/m</p>
+        <h2></h2>
+        <p>kWh</p>
+        <p>$/m</p>
       </ion-label>
     </ion-item>
   </ion-list>

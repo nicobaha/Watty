@@ -3,7 +3,6 @@ import { WeatherService } from '../services/weather.service';
 import { AlertController } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { LocalStorageService } from '../services/local-storage.service';
-import { TuyaService } from '../services/tuya.service';
 
 @Component({
   selector: 'app-tab1',
@@ -19,7 +18,6 @@ export class Tab1Page implements OnInit {
   constructor(
     private alertController: AlertController,
     private router: Router,
-    private localS: LocalStorageService,
     private weatherService: WeatherService // Inyección de WeatherService
   ) {}
 
@@ -42,11 +40,6 @@ export class Tab1Page implements OnInit {
     }
   }
 
-  ionViewWillEnter() {
-    console.log('ionViewWillEnter: Preparando la vista de tabs>tab1.');
-    this.refreshStatus(); // Verificamos el estado del dispositivo al entrar a la vista
-  }
-
   ionViewDidEnter() {
     console.log('ionViewDidEnter: La vista de tabs>tab1 es visible.');
   }
@@ -57,31 +50,6 @@ export class Tab1Page implements OnInit {
 
   ionViewDidLeave() {
     console.log('ionViewDidLeave: La vista de tabs>tab1 ya no es visible.');
-  }
-
-  // Método para refrescar el estado del LED
-  async refreshStatus() {
-    try {
-      this.isLedOn = await TuyaService.getDeviceStatus();
-      this.ledStatus = this.isLedOn ? 'Encendido' : 'Apagado';
-      console.log('Estado del LED:', this.ledStatus);
-    } catch (error) {
-      console.error('Error al obtener el estado del LED:', error);
-      this.ledStatus = 'Error al obtener estado';
-    }
-  }
-
-  // Método para alternar el estado del LED (encender/apagar)
-  async toggleLedState() {
-    try {
-      const newState = !this.isLedOn; // Cambiamos el estado al opuesto
-      await TuyaService.setDeviceState(newState); // Enviamos el comando
-      this.isLedOn = newState; // Actualizamos el estado localmente
-      this.ledStatus = newState ? 'Encendido' : 'Apagado';
-      console.log('LED cambiado a:', this.ledStatus);
-    } catch (error) {
-      console.error('Error al cambiar el estado del LED:', error);
-    }
   }
 
   async showAlert() {
