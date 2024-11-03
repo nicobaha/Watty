@@ -1,38 +1,36 @@
 <ion-header class="ion-no-border">
   <ion-toolbar class="toolbar">
-    <ion-buttons slot="start">
-      <!--<ion-back-button default-href="#"></ion-back-button>-->
-    </ion-buttons>
     <ion-title>Ambientes</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-list>
-    <!-- Iteramos sobre los ambientes -->
-    <ion-card *ngFor="let ambiente of ambientes">
-      <ion-card-header>
-        <ion-card-title>{{ ambiente.NombreAmbiente }}</ion-card-title>
-      </ion-card-header>
-      <ion-card-content>
-        <ion-grid>
-          <ion-row>
-            <ion-col>Nombre ambiente: {{ ambiente.NombrePer_Ambiente }}</ion-col>
-          </ion-row>
-          <ion-row>
-            <ion-col>Consumo actual: {{ ambiente.ConsumoActual || 0 }} kWh</ion-col>
-          </ion-row>
-          <ion-row>
-            <ion-col>Última actualización: {{ ambiente.fechaCreacion?.toDate() | date: 'medium' }}</ion-col>
-          </ion-row>
-        </ion-grid>
-      </ion-card-content>
-      <div class="button-container">
-        <ion-button expand="block"> Detalle Ambiente </ion-button>
-        <ion-button expand="block">Borrar</ion-button>
-      </div>
-    </ion-card>
-  </ion-list>
+  <ion-grid>
+    <ion-row>
+      <!-- Iteramos sobre los ambientes y usamos ion-col para mostrar 2 columnas -->
+      <ion-col size="6" *ngFor="let ambiente of ambientes">
+        <ion-card>
+          <ion-card-header>
+            <ion-card-title>{{ ambiente.Nombre_Ambiente }}</ion-card-title>
+          </ion-card-header>
+          <ion-card-content>
+            <ion-grid>
+              <ion-row>
+                <ion-col>Tipo de ambiente: {{ ambiente.Nombre_TipoAmb }}</ion-col>
+              </ion-row>
+              <ion-row>
+                <ion-col>Consumo actual: {{ ambiente.ConsumoActual || 0 }} kWh</ion-col>
+              </ion-row>
+            </ion-grid>
+          </ion-card-content>
+          <div class="button-container">
+            <ion-button expand="block" (click)="DetalleAmbiente()"> Detalle Ambiente </ion-button>
+            <ion-button expand="block" color="danger" >Borrar</ion-button>
+          </div>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 
   <ion-fab slot="fixed" vertical="bottom" horizontal="end" class="BotonFlotante">
     <ion-fab-button class="boton-fab-personalizado" (click)="abrirModal()">
@@ -40,4 +38,3 @@
     </ion-fab-button>
   </ion-fab>
 </ion-content>
-

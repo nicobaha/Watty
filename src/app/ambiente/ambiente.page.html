@@ -16,15 +16,14 @@
   <ion-item>
     <ion-label>Tipo de Ambiente</ion-label>
     <ion-select [(ngModel)]="ambienteSeleccionado" placeholder="Seleccione tipo">
-      <ion-select-option>
-        
+      <ion-select-option *ngFor="let tipo of tiposAmbiente" [value]="tipo.Id_TipoAmb">
+        {{ tipo.Nombre_TipoAmb }}
       </ion-select-option>
     </ion-select>
   </ion-item>
-
   
   <div class="button-container">
-    <ion-button expand="block" >Guardar</ion-button>
-    <ion-button expand="block">Borrar</ion-button>
+    <ion-button expand="block" (click)="guardarAmbiente()">Guardar</ion-button>
+    <ion-button expand="block" >Borrar</ion-button>
   </div>
 </ion-content>

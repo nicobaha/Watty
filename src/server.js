@@ -74,6 +74,80 @@ app.post('/login', (req, res) => {
   });
 });
 
+//Obtener ambientes de manera dinámica según el Id_User.
+app.get('/ambientes/:Id_User', (req, res) => {
+  const { Id_User } = req.params;
+
+  if (!Id_User) {
+    return res.status(400).json({ error: 'Id_User es requerido' });
+  }
+
+  const query = `
+    SELECT AMBIENTE.Id_Ambiente, tipo_ambiente.Nombre_TipoAmb, AMBIENTE.Nombre_Ambiente
+    FROM AMBIENTE
+    INNER JOIN tipo_ambiente ON AMBIENTE.Id_TipoAmb = tipo_ambiente.Id_TipoAmb
+    WHERE ID_USER=?;
+  `;
+
+  db.query(query, [Id_User], (err, results) => {
+    if (err) {
+      console.error('Error al obtener ambientes:', err);
+      return res.status(500).json({ error: 'Error en el servidor' });
+    }
+
+    // Verificar si se encontraron resultados
+    if (results.length > 0) {
+      res.status(200).json({ ambientes: results });
+    } else {
+      res.status(404).json({ message: 'No se encontraron ambientes para este usuario' });
+    }
+  });
+});
+
+// Obtener tipo_ambiente
+app.get('/Tipoambientes', (req, res) => {
+  const query = 'select * from tipo_ambiente;';
+  db.query(query, (err, results) => { 
+    if (err) {
+      res.status(500).send(err);
+    } else {
+      res.json(results);
+    }
+  });
+});
+
+//Insertar Ambientes
+app.post('/InsertAmbientes', (req, res) => {
+  console.log('Datos recibidos en la solicitud:', req.body); // Agrega esto para ver los datos recibidos
+  const { Nombre_Ambiente, Id_User, Id_TipoAmb } = req.body;
+
+  const query = 'INSERT INTO AMBIENTE (Nombre_Ambiente, Id_User, Id_TipoAmb) VALUES (?, ?, ?)';
+  db.query(query, [Nombre_Ambiente, Id_User, Id_TipoAmb], (err, result) => {
+    if (err) {
+      console.error('Error al insertar ambiente:', err);
+      return res.status(500).json({ error: 'Error al insertar ambiente' });
+    }
+    res.status(201).json({ message: 'Ambiente insertado con éxito' });
+  });
+});
+
+//Eliminar Ambiente
+app.delete('/EliminarAmbientes/:Id_Ambiente', (req, res) => {
+  const { Id_Ambiente } = req.params;
+
+  const query = 'DELETE FROM AMBIENTE WHERE Id_Ambiente = ?';
+  db.query(query, [Id_Ambiente], (err, result) => {
+    if (err) {
+      console.error('Error al eliminar ambiente:', err);
+      return res.status(500).json({ error: 'Error al eliminar el ambiente' });
+    }
+    if (result.affectedRows === 0) {
+      return res.status(404).json({ message: 'Ambiente no encontrado' });
+    }
+    res.status(200).json({ message: 'Ambiente eliminado con éxito' });
+  });
+});
+
 
 
 // Iniciar el servidor

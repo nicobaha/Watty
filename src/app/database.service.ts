@@ -40,4 +40,24 @@ export class DatabaseService {
     return this.http.post(url, body, { headers });
   }
 
+  //Cargar Ambientes
+  CargarAmbientes(Id_User: number): Observable<any> {
+    return this.http.get(`${this.apiUrl}/ambientes/${Id_User}`);
+  }
+
+  // Cargar los tipos de ambiente
+  CargarTipoAmbiente(): Observable<any> {
+    return this.http.get(`${this.apiUrl}/Tipoambientes`); 
+  }
+
+  //Ruta para insertar ambientes
+  // Servicio de DatabaseService
+  insertarAmbiente(ambiente: any): Observable<any> {
+    return this.http.post(`${this.apiUrl}/InsertAmbientes`, ambiente);
+  }
+
+  // Ruta para eliminar Ambiente
+  eliminarAmbiente(Id_Ambiente: number): Observable<any> {
+    return this.http.delete(`${this.apiUrl}/EliminarAmbientes/${Id_Ambiente}`);
+  }
 }
